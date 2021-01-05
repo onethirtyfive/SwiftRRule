@@ -7,20 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D82780FC259CB8DF00A1B6CA /* RRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82780FB259CB8DF00A1B6CA /* RRule.swift */; };
 		D8278118259CD4DB00A1B6CA /* SwiftDate in Frameworks */ = {isa = PBXBuildFile; productRef = D8278117259CD4DB00A1B6CA /* SwiftDate */; };
 		D8336130259CA36300E802D6 /* BLRRuleSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8336126259CA36300E802D6 /* BLRRuleSwift.framework */; };
-		D8609B7E259CA61C00DC5109 /* BLRRuleSwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8609B6A259CA44800DC5109 /* BLRRuleSwiftTests.swift */; };
-		D8609B80259CA61C00DC5109 /* XCTestManifests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8609B69259CA44800DC5109 /* XCTestManifests.swift */; };
 		D8609BAE259CAFC300DC5109 /* Nimble in Frameworks */ = {isa = PBXBuildFile; productRef = D8609BAD259CAFC300DC5109 /* Nimble */; };
-		D87BF87125A07B91006EAAC1 /* RFCWeekDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87BF86F25A07B91006EAAC1 /* RFCWeekDay.swift */; };
 		D87BF87225A07B91006EAAC1 /* Frequency.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87BF87025A07B91006EAAC1 /* Frequency.swift */; };
 		D8ABFD3225A072FC0066BDB2 /* WeekDay+RFCWeekdayCompat.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8ABFD3125A072FC0066BDB2 /* WeekDay+RFCWeekdayCompat.swift */; };
-		D8ABFD3825A0732F0066BDB2 /* Configuring.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8ABFD3725A0732F0066BDB2 /* Configuring.swift */; };
+		D8ABFD3825A0732F0066BDB2 /* ConfigureForRRuleDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8ABFD3725A0732F0066BDB2 /* ConfigureForRRuleDefinition.swift */; };
 		D8ABFD4B25A074100066BDB2 /* Iterable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8ABFD4A25A074100066BDB2 /* Iterable.swift */; };
 		D8ABFD4F25A074290066BDB2 /* Queryable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8ABFD4E25A074290066BDB2 /* Queryable.swift */; };
-		D8ABFD6625A076A60066BDB2 /* Quick in Frameworks */ = {isa = PBXBuildFile; productRef = D8ABFD6525A076A60066BDB2 /* Quick */; };
-		D8B6A6A625A07EF30050A157 /* RFCWeekDay+WeekDayCompat.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8B6A6A525A07EF30050A157 /* RFCWeekDay+WeekDayCompat.swift */; };
+		D8B6A6B425A135150050A157 /* ConfigureForRRuleDefinitionSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8B6A6B325A135150050A157 /* ConfigureForRRuleDefinitionSpec.swift */; };
+		D8B6A6BD25A137D20050A157 /* Quick in Frameworks */ = {isa = PBXBuildFile; productRef = D8B6A6BC25A137D20050A157 /* Quick */; };
+		D8DA196025A428B9001AC180 /* Compat.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8DA195F25A428B9001AC180 /* Compat.swift */; };
+		D8DA197A25A4673F001AC180 /* RFC5545.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8DA197925A4673F001AC180 /* RFC5545.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,23 +32,21 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		D82780FB259CB8DF00A1B6CA /* RRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RRule.swift; path = Source/RRule.swift; sourceTree = "<group>"; };
 		D8278123259D116100A1B6CA /* Sandbox.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; name = Sandbox.playground; path = "../../../Library/Autosave Information/Sandbox.playground"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		D8336126259CA36300E802D6 /* BLRRuleSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BLRRuleSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D833612F259CA36300E802D6 /* BLRRuleSwiftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BLRRuleSwiftTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8609B5E259CA42600DC5109 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Tests/Info.plist; sourceTree = "<group>"; };
-		D8609B69259CA44800DC5109 /* XCTestManifests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = XCTestManifests.swift; path = Tests/XCTestManifests.swift; sourceTree = "<group>"; };
-		D8609B6A259CA44800DC5109 /* BLRRuleSwiftTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BLRRuleSwiftTests.swift; path = Tests/BLRRuleSwiftTests.swift; sourceTree = "<group>"; };
 		D8609B8B259CA71D00DC5109 /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 		D8609B9C259CA8D100DC5109 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = Source/Info.plist; sourceTree = "<group>"; };
 		D8609B9F259CA8EA00DC5109 /* BLRRuleSwift.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = BLRRuleSwift.podspec; sourceTree = "<group>"; };
-		D87BF86F25A07B91006EAAC1 /* RFCWeekDay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RFCWeekDay.swift; path = Source/Types/RFCWeekDay.swift; sourceTree = "<group>"; };
 		D87BF87025A07B91006EAAC1 /* Frequency.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Frequency.swift; path = Source/Types/Frequency.swift; sourceTree = "<group>"; };
 		D8ABFD3125A072FC0066BDB2 /* WeekDay+RFCWeekdayCompat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WeekDay+RFCWeekdayCompat.swift"; sourceTree = "<group>"; };
-		D8ABFD3725A0732F0066BDB2 /* Configuring.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Configuring.swift; path = Source/Configuring.swift; sourceTree = "<group>"; };
+		D8ABFD3725A0732F0066BDB2 /* ConfigureForRRuleDefinition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ConfigureForRRuleDefinition.swift; path = Source/ConfigureForRRuleDefinition.swift; sourceTree = "<group>"; };
 		D8ABFD4A25A074100066BDB2 /* Iterable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Iterable.swift; path = Source/Protocols/Iterable.swift; sourceTree = "<group>"; };
 		D8ABFD4E25A074290066BDB2 /* Queryable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Queryable.swift; path = Source/Protocols/Queryable.swift; sourceTree = "<group>"; };
-		D8B6A6A525A07EF30050A157 /* RFCWeekDay+WeekDayCompat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RFCWeekDay+WeekDayCompat.swift"; sourceTree = "<group>"; };
+		D8B6A6B325A135150050A157 /* ConfigureForRRuleDefinitionSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ConfigureForRRuleDefinitionSpec.swift; path = Tests/ConfigureForRRuleDefinitionSpec.swift; sourceTree = "<group>"; };
+		D8DA195F25A428B9001AC180 /* Compat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Compat.swift; path = Source/Protocols/Compat.swift; sourceTree = "<group>"; };
+		D8DA197925A4673F001AC180 /* RFC5545.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RFC5545.swift; path = Source/Types/RFC5545.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,7 +62,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D8ABFD6625A076A60066BDB2 /* Quick in Frameworks */,
+				D8B6A6BD25A137D20050A157 /* Quick in Frameworks */,
 				D8609BAE259CAFC300DC5109 /* Nimble in Frameworks */,
 				D8336130259CA36300E802D6 /* BLRRuleSwift.framework in Frameworks */,
 			);
@@ -106,8 +102,7 @@
 		D8609B5C259CA40B00DC5109 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				D8609B6A259CA44800DC5109 /* BLRRuleSwiftTests.swift */,
-				D8609B69259CA44800DC5109 /* XCTestManifests.swift */,
+				D8B6A6B325A135150050A157 /* ConfigureForRRuleDefinitionSpec.swift */,
 				D8609B5D259CA41800DC5109 /* Supporting Files */,
 			);
 			name = Tests;
@@ -133,8 +128,7 @@
 		D8609B8F259CA7D800DC5109 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				D8ABFD3725A0732F0066BDB2 /* Configuring.swift */,
-				D82780FB259CB8DF00A1B6CA /* RRule.swift */,
+				D8ABFD3725A0732F0066BDB2 /* ConfigureForRRuleDefinition.swift */,
 				D87BF86E25A07B7E006EAAC1 /* Types */,
 				D8ABFD4125A073AC0066BDB2 /* Protocols */,
 				D8ABFD3025A072FC0066BDB2 /* Categories */,
@@ -155,7 +149,7 @@
 			isa = PBXGroup;
 			children = (
 				D87BF87025A07B91006EAAC1 /* Frequency.swift */,
-				D87BF86F25A07B91006EAAC1 /* RFCWeekDay.swift */,
+				D8DA197925A4673F001AC180 /* RFC5545.swift */,
 			);
 			name = Types;
 			sourceTree = "<group>";
@@ -164,7 +158,6 @@
 			isa = PBXGroup;
 			children = (
 				D8ABFD3125A072FC0066BDB2 /* WeekDay+RFCWeekdayCompat.swift */,
-				D8B6A6A525A07EF30050A157 /* RFCWeekDay+WeekDayCompat.swift */,
 			);
 			name = Categories;
 			path = Source/Categories;
@@ -175,6 +168,7 @@
 			children = (
 				D8ABFD4E25A074290066BDB2 /* Queryable.swift */,
 				D8ABFD4A25A074100066BDB2 /* Iterable.swift */,
+				D8DA195F25A428B9001AC180 /* Compat.swift */,
 			);
 			name = Protocols;
 			sourceTree = "<group>";
@@ -229,7 +223,7 @@
 			name = BLRRuleSwiftTests;
 			packageProductDependencies = (
 				D8609BAD259CAFC300DC5109 /* Nimble */,
-				D8ABFD6525A076A60066BDB2 /* Quick */,
+				D8B6A6BC25A137D20050A157 /* Quick */,
 			);
 			productName = BLRRuleSwiftTests;
 			productReference = D833612F259CA36300E802D6 /* BLRRuleSwiftTests.xctest */;
@@ -265,7 +259,7 @@
 			packageReferences = (
 				D8609BAC259CAFC300DC5109 /* XCRemoteSwiftPackageReference "Nimble" */,
 				D8278116259CD4DB00A1B6CA /* XCRemoteSwiftPackageReference "SwiftDate" */,
-				D8ABFD6425A076A60066BDB2 /* XCRemoteSwiftPackageReference "Quick" */,
+				D8B6A6BB25A137D20050A157 /* XCRemoteSwiftPackageReference "Quick" */,
 			);
 			productRefGroup = D8336127259CA36300E802D6 /* Products */;
 			projectDirPath = "";
@@ -300,13 +294,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				D8ABFD4F25A074290066BDB2 /* Queryable.swift in Sources */,
-				D82780FC259CB8DF00A1B6CA /* RRule.swift in Sources */,
-				D8ABFD3825A0732F0066BDB2 /* Configuring.swift in Sources */,
+				D8ABFD3825A0732F0066BDB2 /* ConfigureForRRuleDefinition.swift in Sources */,
+				D8DA197A25A4673F001AC180 /* RFC5545.swift in Sources */,
 				D8ABFD4B25A074100066BDB2 /* Iterable.swift in Sources */,
-				D87BF87125A07B91006EAAC1 /* RFCWeekDay.swift in Sources */,
 				D8ABFD3225A072FC0066BDB2 /* WeekDay+RFCWeekdayCompat.swift in Sources */,
 				D87BF87225A07B91006EAAC1 /* Frequency.swift in Sources */,
-				D8B6A6A625A07EF30050A157 /* RFCWeekDay+WeekDayCompat.swift in Sources */,
+				D8DA196025A428B9001AC180 /* Compat.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -314,8 +307,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D8609B7E259CA61C00DC5109 /* BLRRuleSwiftTests.swift in Sources */,
-				D8609B80259CA61C00DC5109 /* XCTestManifests.swift in Sources */,
+				D8B6A6B425A135150050A157 /* ConfigureForRRuleDefinitionSpec.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -691,7 +683,7 @@
 				minimumVersion = 9.0.0;
 			};
 		};
-		D8ABFD6425A076A60066BDB2 /* XCRemoteSwiftPackageReference "Quick" */ = {
+		D8B6A6BB25A137D20050A157 /* XCRemoteSwiftPackageReference "Quick" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Quick/Quick";
 			requirement = {
@@ -712,9 +704,9 @@
 			package = D8609BAC259CAFC300DC5109 /* XCRemoteSwiftPackageReference "Nimble" */;
 			productName = Nimble;
 		};
-		D8ABFD6525A076A60066BDB2 /* Quick */ = {
+		D8B6A6BC25A137D20050A157 /* Quick */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D8ABFD6425A076A60066BDB2 /* XCRemoteSwiftPackageReference "Quick" */;
+			package = D8B6A6BB25A137D20050A157 /* XCRemoteSwiftPackageReference "Quick" */;
 			productName = Quick;
 		};
 /* End XCSwiftPackageProductDependency section */
