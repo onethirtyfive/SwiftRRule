@@ -86,81 +86,6 @@ public enum GenerationError: Error {
         nCannotBeZero
 }
 
-// MARK: - Default recurrence criteria synthesis
-
-internal func shouldDeriveDefaultRecurrenceCriteria(_ rrule: RFCRRule) -> Bool {
-    var testWeekno: Bool
-    switch rrule.byweekno {
-    case .many(let manyWeekno): testWeekno = manyWeekno.isEmpty
-    case .one(let weekno): testWeekno = weekno == 0
-    case .none: testWeekno = true
-    }
-
-    var testYearday: Bool
-    switch rrule.byyearday {
-    case .many(let manyYearday): testYearday = manyYearday.isEmpty
-    default: testYearday = true
-    }
-
-    var testMonthday: Bool
-    switch rrule.bymonthday {
-    case .many(let manyMonthday): testMonthday = manyMonthday.isEmpty
-    case .one(let monthday): testMonthday = monthday == 0
-    case .none: testMonthday = true
-    }
-
-    var testWeekDay: Bool
-    switch rrule.byweekday {
-    case .none: testWeekDay = true
-    default: testWeekDay = false
-    }
-
-    let shouldSynthesizeBaselineConfiguration =
-        testWeekno && testYearday && testMonthday && testWeekDay
-
-    return shouldSynthesizeBaselineConfiguration
-}
-
-internal enum DerivedDefaultRecurrenceCriteria {
-    case forFreqYearly(_ manyMonth: Many<Month>, _ manyMonthday: Many<Int>)
-    case forFreqMonthly(_ manyMonthday: Many<Int>)
-    case forFreqWeekly(_ bimodalWeekDay: BimodalWeekDay)
-    case none
-}
-
-
-internal func deriveDefaultRecurrenceCriteria(_ rrule: RFCRRule, dtstart: Date)
-    throws -> DerivedDefaultRecurrenceCriteria {
-
-    let day = dtstart.day
-    let weekdayOrd: Int = dtstart.weekday
-    let monthOrd: Int = dtstart.month
-
-    switch rrule.freq {
-    case .yearly:
-        switch rrule.bymonth {
-        case .many(let manyMonth): return .forFreqYearly(manyMonth, [day])
-        case .one(let month): return .forFreqYearly([month], [day])
-        case .none:
-            // SwiftDate's Month is zero-indexed; Date's month is one-indexed.
-            guard let month = Month(rawValue: monthOrd - 1) else {
-                throw GenerationError.invalidMonthOrdinal
-            }
-            return .forFreqYearly([month], [day])
-        }
-    case .monthly:
-        return .forFreqMonthly([day])
-    case .weekly:
-        // SwiftDate's WeekDay and Date's weekday are both one-indexed.
-        guard let weekday = WeekDay(rawValue: weekdayOrd) else {
-            throw GenerationError.invalidWeekdayOrdinal
-        }
-        return .forFreqWeekly(.each(weekday.toRFCWeekDay()))
-    default:
-        return .none
-    }
-}
-
 // MARK: - Input homogenization
 
 internal func homogenizeBysetpos(_ rrule: RFCRRule) throws -> Many<Int> {
@@ -222,6 +147,80 @@ internal func homogenizeBysecond(_ rrule: RFCRRule, dtstart: Date) -> Many<Int> 
     case .many(let manySecond): return manySecond
     case .one(let second): return [second]
     case .none: return (rrule.freq < .secondly) ? [dtstart.second] : []
+    }
+}
+
+// MARK: - Default recurrence criteria synthesis
+
+internal func shouldDeriveDefaultRecurrenceCriteria(_ rrule: RFCRRule) -> Bool {
+    var testWeekno: Bool
+    switch rrule.byweekno {
+    case .many(let manyWeekno): testWeekno = manyWeekno.isEmpty
+    case .one(let weekno): testWeekno = weekno == 0
+    case .none: testWeekno = true
+    }
+
+    var testYearday: Bool
+    switch rrule.byyearday {
+    case .many(let manyYearday): testYearday = manyYearday.isEmpty
+    default: testYearday = true
+    }
+
+    var testMonthday: Bool
+    switch rrule.bymonthday {
+    case .many(let manyMonthday): testMonthday = manyMonthday.isEmpty
+    case .one(let monthday): testMonthday = monthday == 0
+    case .none: testMonthday = true
+    }
+
+    var testWeekDay: Bool
+    switch rrule.byweekday {
+    case .none: testWeekDay = true
+    default: testWeekDay = false
+    }
+
+    let shouldSynthesizeBaselineConfiguration =
+        testWeekno && testYearday && testMonthday && testWeekDay
+
+    return shouldSynthesizeBaselineConfiguration
+}
+
+internal enum DerivedDefaultRecurrenceCriteria {
+    case forFreqYearly(_ manyMonth: Many<Month>, _ manyMonthday: Many<Int>)
+    case forFreqMonthly(_ manyMonthday: Many<Int>)
+    case forFreqWeekly(_ bimodalWeekDay: BimodalWeekDay)
+    case none
+}
+
+internal func deriveDefaultRecurrenceCriteria(_ rrule: RFCRRule, dtstart: Date)
+    throws -> DerivedDefaultRecurrenceCriteria {
+
+    let day = dtstart.day
+    let weekdayOrd: Int = dtstart.weekday
+    let monthOrd: Int = dtstart.month
+
+    switch rrule.freq {
+    case .yearly:
+        switch rrule.bymonth {
+        case .many(let manyMonth): return .forFreqYearly(manyMonth, [day])
+        case .one(let month): return .forFreqYearly([month], [day])
+        case .none:
+            // SwiftDate's Month is zero-indexed; Date's month is one-indexed.
+            guard let month = Month(rawValue: monthOrd - 1) else {
+                throw GenerationError.invalidMonthOrdinal
+            }
+            return .forFreqYearly([month], [day])
+        }
+    case .monthly:
+        return .forFreqMonthly([day])
+    case .weekly:
+        // SwiftDate's WeekDay and Date's weekday are both one-indexed.
+        guard let weekday = WeekDay(rawValue: weekdayOrd) else {
+            throw GenerationError.invalidWeekdayOrdinal
+        }
+        return .forFreqWeekly(.each(weekday.toRFCWeekDay()))
+    default:
+        return .none
     }
 }
 
