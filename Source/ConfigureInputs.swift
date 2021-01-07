@@ -1,10 +1,10 @@
 //
-//  ConfigureForRRuleDefinition.swift
+//  ConfigureInputs.swift
 //  BLRRuleSwift
 //
 //  Created by Joshua Morris on 1/2/21.
 //
-//  The gist: Configurator transforms an RRuleDefinition into a Configuration.
+//  The gist: Transforms an Inputs into a Configuration.
 
 import Foundation
 import SwiftDate
@@ -15,12 +15,12 @@ internal typealias Many<T: Hashable> = Set<T>
 
 internal enum BimodalWeekDay: Hashable {
     case each(_: RFCWeekDay)
-    case eachNth(_: RFCNthWeekDay)
+    case eachN(_: RFCNWeekDay)
 
     public func hash(into hasher: inout Hasher) {
         switch self {
         case .each(let weekDay): hasher.combine(weekDay)
-        case .eachNth(let nWeekDay): hasher.combine(nWeekDay)
+        case .eachN(let nWeekDay): hasher.combine(nWeekDay)
         }
     }
 }
@@ -37,12 +37,13 @@ internal typealias BimodalWeekDaySetting = Input<BimodalWeekDay>
 
 // MARK: - Argument/Return types
 
-public struct RRuleDefinition {
+public struct Inputs {
     var outset: RFCOutset =
         RFCOutset(
             dtstart: Date(seconds: TimeInterval(Date().timeIntervalSince1970)),
             tzid: nil
         )
+
     var rrule: RFCRRule = RFCRRule()
 
     init(_ outset: RFCOutset, _ rrule: RFCRRule) {
@@ -57,19 +58,21 @@ public struct Configuration {
 }
 
 public struct RecurrenceCriteria {
-    let freq: Frequency
+    let freq: RFCFrequency
     let interval: Int
     let wkst: RFCWeekDay
     let count: Int?
     let until: Date?
-    let manySetpos: Many<Int>
+
     let manyMonth: Many<Month>
     let manyMonthday: Many<Int>
     let manyNmonthday: Many<Int>
+    let manyWeekDay: Many<RFCWeekDay>
+    let manyNWeekDay: Many<RFCNWeekDay>
+
+    let manySetpos: Many<Int>
     let manyYearday: Many<Int>
     let manyWeekno: Many<Int>
-    let manyWeekDay: Many<RFCWeekDay>
-    let manyNWeekDay: Many<RFCNthWeekDay>
     let manyHour: Many<Int>
     let manyMinute: Many<Int>
     let manySecond: Many<Int>
@@ -77,23 +80,21 @@ public struct RecurrenceCriteria {
 
 // MARK: - Failure modes
 
-public enum GenerationError: Error {
+public enum ConfigureError: Error {
     case
-        invariantViolation(_ msg: String),
-        invalidBysetpos(value: Int),
-        invalidMonthOrdinal,
-        invalidWeekdayOrdinal,
-        nCannotBeZero
+        invalidSetposOrdinal(value: Int),
+        invalidMonthOrdinal(value: Int),
+        invalidWeekdayOrdinal(value: Int)
 }
 
 // MARK: - Input homogenization
 
-internal func homogenizeBysetpos(_ rrule: RFCRRule) throws -> Many<Int> {
-    switch rrule.bysetpos {
+internal func homogenizeBysetpos(_ bysetpos: OrdSetting) throws -> Many<Int> {
+    switch bysetpos {
     case .many(let manySetpos):
         for setpos in manySetpos {
             if (setpos == 0 || !(-366...366).contains(setpos)) {
-                throw GenerationError.invalidBysetpos(value: setpos)
+                throw ConfigureError.invalidSetposOrdinal(value: setpos)
             }
         }
         return manySetpos
@@ -102,51 +103,57 @@ internal func homogenizeBysetpos(_ rrule: RFCRRule) throws -> Many<Int> {
     }
 }
 
-internal func homogenizeByyearday(_ rrule: RFCRRule) -> Many<Int> {
-    switch rrule.byyearday {
+internal func homogenizeByyearday(_ byyearday: OrdSetting) -> Many<Int> {
+    switch byyearday {
     case .many(let manyYearday): return manyYearday
     case .one(let yearday): return [yearday]
     case .none: return []
     }
 }
 
-internal func homogenizeBymonth(_ rrule: RFCRRule) -> Many<Month> {
-    switch rrule.bymonth {
+internal func homogenizeBymonth(_ bymonth: MonthSetting) -> Many<Month> {
+    switch bymonth {
     case .many(let manyMonth): return manyMonth
     case .one(let month): return [month]
     case .none: return []
     }
 }
 
-internal func homogenizeByweekno(_ rrule: RFCRRule) -> Many<Int> {
-    switch rrule.byweekno {
+internal func homogenizeByweekno(_ byweekno: OrdSetting) -> Many<Int> {
+    switch byweekno {
     case .many(let manyWeekno): return manyWeekno
     case .one(let weekno): return [weekno]
     case .none: return []
     }
 }
 
-internal func homogenizeByhour(_ rrule: RFCRRule, dtstart: Date) -> Many<Int> {
-    switch rrule.byhour {
+internal func homogenizeByhour(_ byhour: OrdSetting, dtstart: Date, freq: RFCFrequency)
+    -> Many<Int> {
+
+    switch byhour {
     case .many(let manyHour): return manyHour
     case .one(let hour): return [hour]
-    case .none: return (rrule.freq < .hourly) ? [dtstart.hour] : []
+    case .none: return (freq < .hourly) ? [dtstart.hour] : []
     }
 }
 
-internal func homogenizeByminute(_ rrule: RFCRRule, dtstart: Date) -> Many<Int> {
-    switch rrule.byminute {
+internal func homogenizeByminute(_ byminute: OrdSetting, dtstart: Date,
+    freq: RFCFrequency) -> Many<Int> {
+
+    switch byminute {
     case .many(let manyMinute): return manyMinute
     case .one(let minute): return [minute]
-    case .none: return (rrule.freq < .minutely) ? [dtstart.minute] : []
+    case .none: return (freq < .minutely) ? [dtstart.minute] : []
     }
 }
 
-internal func homogenizeBysecond(_ rrule: RFCRRule, dtstart: Date) -> Many<Int> {
-    switch rrule.bysecond {
+internal func homogenizeBysecond(_ bysecond: OrdSetting, dtstart: Date,
+    freq: RFCFrequency) -> Many<Int> {
+
+    switch bysecond {
     case .many(let manySecond): return manySecond
     case .one(let second): return [second]
-    case .none: return (rrule.freq < .secondly) ? [dtstart.second] : []
+    case .none: return (freq < .secondly) ? [dtstart.second] : []
     }
 }
 
@@ -179,10 +186,10 @@ internal func shouldDeriveDefaultRecurrenceCriteria(_ rrule: RFCRRule) -> Bool {
     default: testWeekDay = false
     }
 
-    let shouldSynthesizeBaselineConfiguration =
+    let shouldDeriveDefaultRecurrenceCriteria =
         testWeekno && testYearday && testMonthday && testWeekDay
 
-    return shouldSynthesizeBaselineConfiguration
+    return shouldDeriveDefaultRecurrenceCriteria
 }
 
 internal enum DerivedDefaultRecurrenceCriteria {
@@ -207,7 +214,7 @@ internal func deriveDefaultRecurrenceCriteria(_ rrule: RFCRRule, dtstart: Date)
         case .none:
             // SwiftDate's Month is zero-indexed; Date's month is one-indexed.
             guard let month = Month(rawValue: monthOrd - 1) else {
-                throw GenerationError.invalidMonthOrdinal
+                throw ConfigureError.invalidMonthOrdinal(value: monthOrd)
             }
             return .forFreqYearly([month], [day])
         }
@@ -216,7 +223,7 @@ internal func deriveDefaultRecurrenceCriteria(_ rrule: RFCRRule, dtstart: Date)
     case .weekly:
         // SwiftDate's WeekDay and Date's weekday are both one-indexed.
         guard let weekday = WeekDay(rawValue: weekdayOrd) else {
-            throw GenerationError.invalidWeekdayOrdinal
+            throw ConfigureError.invalidWeekdayOrdinal(value: weekdayOrd)
         }
         return .forFreqWeekly(.each(weekday.toRFCWeekDay()))
     default:
@@ -234,20 +241,21 @@ internal func partitionMonthday(_ manyMonthday: Many<Int>) -> (Many<Int>, Many<I
         if md > 0 { _manyMonthday.update(with: md) }
         if md < 0 { _manyNmonthday.update(with: md) }
     }
+
     return (_manyMonthday, _manyNmonthday)
 }
 
 internal func partitionWeekDay(_ manyBimodalWeekDay: Many<BimodalWeekDay>,
-    freq: Frequency) -> (Many<RFCWeekDay>, Many<RFCNthWeekDay>) {
+    freq: RFCFrequency) -> (Many<RFCWeekDay>, Many<RFCNWeekDay>) {
 
     var manyWeekDay: Many<RFCWeekDay> = []
-    var manyNWeekDay: Many<RFCNthWeekDay> = []
+    var manyNWeekDay: Many<RFCNWeekDay> = []
 
     for bimodalWeekDay in manyBimodalWeekDay {
         switch bimodalWeekDay {
         case .each(let weekDay):
             manyWeekDay.update(with: weekDay)
-        case .eachNth(let nWeekDay):
+        case .eachN(let nWeekDay):
             if freq > .monthly {
                 manyWeekDay.update(with: nWeekDay.toRFCWeekDay())
             } else {
@@ -255,6 +263,7 @@ internal func partitionWeekDay(_ manyBimodalWeekDay: Many<BimodalWeekDay>,
             }
         }
     }
+
     return (manyWeekDay, manyNWeekDay)
 }
 
@@ -269,35 +278,24 @@ internal func roundDtstart(_ dtstart: Date) -> Date {
 
 // MARK: -
 
-public struct ConfigureForRRuleDefinition {
-    let rruleDefinition: RRuleDefinition
+public struct ConfigureInputs {
+    let inputs: Inputs
 
-    init(_ rruleDefinition: RRuleDefinition) {
-        self.rruleDefinition = rruleDefinition
+    init(_ inputs: Inputs) {
+        self.inputs = inputs
     }
 
     public func run() throws -> Configuration {
-        let outset = self.rruleDefinition.outset
-        let rrule = self.rruleDefinition.rrule
+        let rrule = self.inputs.rrule
+        let dtstart: Date = roundDtstart(inputs.outset.dtstart)
 
-        let dtstart: Date = roundDtstart(outset.dtstart)
-        let manySetpos = try homogenizeBysetpos(rrule)
-        let manyYearday = homogenizeByyearday(rrule)
-        let manyWeekno = homogenizeByweekno(rrule)
-        let manyHour = homogenizeByhour(rrule, dtstart: dtstart)
-        let manyMinute = homogenizeByminute(rrule, dtstart: dtstart)
-        let manySecond = homogenizeBysecond(rrule, dtstart: dtstart)
-
-        // variant: can be overridden below
-        var manyMonth: Set<Month> = homogenizeBymonth(rrule)
-
-        // invariant: always configured below
+        var manyMonth: Set<Month>? = homogenizeBymonth(rrule.bymonth)
         var manyMonthday: Many<Int>? = nil
         var manyNmonthday: Many<Int> = []
         var manyWeekDay: Many<RFCWeekDay>? = nil
-        var manyNWeekDay: Many<RFCNthWeekDay> = []
+        var manyNWeekDay: Many<RFCNWeekDay> = []
 
-        if shouldDeriveDefaultRecurrenceCriteria(rrule) {
+        if shouldDeriveDefaultRecurrenceCriteria(self.inputs.rrule) {
             switch (try deriveDefaultRecurrenceCriteria(rrule, dtstart: dtstart)) {
             case .forFreqYearly(let _manyMonth, let _manyMonthday):
                 manyMonth = _manyMonth
@@ -332,28 +330,44 @@ public struct ConfigureForRRuleDefinition {
                 (manyWeekDay, manyNWeekDay) =
                     partitionWeekDay([bimodalWeekDay], freq: rrule.freq)
             case .none:
-                (manyWeekDay, manyNWeekDay) =
-                    partitionWeekDay([], freq: rrule.freq)
+                (manyWeekDay, manyNWeekDay) = partitionWeekDay([], freq: rrule.freq)
             }
         }
 
-        let configuredOutset = RFCOutset(dtstart: dtstart, tzid: outset.tzid)
-        let configuredRecurrenceCriteria =
+        let manySetpos = try homogenizeBysetpos(rrule.bysetpos)
+        let manyYearday = homogenizeByyearday(rrule.byyearday)
+        let manyWeekno = homogenizeByweekno(rrule.byweekno)
+        let manyHour = homogenizeByhour(rrule.byhour, dtstart: dtstart, freq: rrule.freq)
+        let manyMinute = homogenizeByminute(rrule.byminute, dtstart: dtstart, freq: rrule.freq)
+        let manySecond = homogenizeBysecond(rrule.bysecond, dtstart: dtstart, freq: rrule.freq)
+
+        let recurrenceCriteria =
             RecurrenceCriteria(
-                freq: rrule.freq, interval: rrule.interval, wkst: rrule.wkst,
-                count: rrule.count, until: rrule.until,
-                manySetpos: manySetpos, manyMonth: manyMonth,
-                manyMonthday: manyMonthday!, manyNmonthday: manyNmonthday,
-                manyYearday: manyYearday, manyWeekno: manyWeekno,
-                manyWeekDay: manyWeekDay!, manyNWeekDay: manyNWeekDay,
-                manyHour: manyHour, manyMinute: manyMinute,
-                manySecond:manySecond
+                freq: rrule.freq,
+                interval: rrule.interval,
+                wkst: rrule.wkst,
+                count: rrule.count,
+                until: rrule.until,
+
+                // All force-unwrapped optionals are guaranteed non-nil by now
+                manyMonth: manyMonth!,
+                manyMonthday: manyMonthday!,
+                manyNmonthday: manyNmonthday,
+                manyWeekDay: manyWeekDay!,
+                manyNWeekDay: manyNWeekDay,
+
+                manySetpos: manySetpos,
+                manyYearday: manyYearday,
+                manyWeekno: manyWeekno,
+                manyHour: manyHour,
+                manyMinute: manyMinute,
+                manySecond: manySecond
             )
 
         return
             Configuration(
-                outset: configuredOutset,
-                recurrenceCriteria: configuredRecurrenceCriteria
+                outset: RFCOutset(dtstart: dtstart, tzid: self.inputs.outset.tzid),
+                recurrenceCriteria: recurrenceCriteria
             )
     }
 }

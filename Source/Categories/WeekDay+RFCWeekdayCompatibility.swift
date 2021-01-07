@@ -8,7 +8,7 @@
 import Foundation
 import SwiftDate
 
-extension WeekDay: RFCWeekDayCompat {
+extension WeekDay: RFCWeekDayCompatibility {
     public func toRFCWeekDay() -> RFCWeekDay {
         switch (self) {
         case .monday: return .monday

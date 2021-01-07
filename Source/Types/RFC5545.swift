@@ -8,6 +8,47 @@
 import Foundation
 import SwiftDate
 
+public enum RFCFrequency: String {
+    case
+        yearly = "YEARLY",
+        monthly = "MONTHLY",
+        weekly = "WEEKLY",
+        daily = "DAILY",
+        hourly = "HOURLY",
+        minutely = "MINUTELY",
+        secondly = "SECONDLY"
+
+    public func isDailyOrGreater() -> Bool {
+        return self < .hourly
+    }
+}
+
+// Swift 5.3 has synthesized enum Comparable, but this enables earlier version support.
+extension RFCFrequency: Comparable {
+    public static func < (lhs: RFCFrequency, rhs: RFCFrequency) -> Bool {
+        return (lhs != rhs) && (lhs == Self.minimum(lhs, rhs))
+    }
+
+    private static func minimum(_ lhs: Self, _ rhs: Self) -> Self {
+        switch (lhs, rhs) {
+        case (.yearly, _), (_, .yearly):
+            return .yearly
+        case (.monthly, _), (_, .monthly):
+            return .monthly
+        case (.weekly, _), (_, .weekly):
+            return .weekly
+        case (.daily, _), (_, .daily):
+            return .daily
+        case (.hourly, _), (_, .hourly):
+            return .hourly
+        case (.minutely, _), (_, .minutely):
+            return .minutely
+        case (.secondly, _), (_, .secondly):
+            return .secondly
+        }
+    }
+}
+
 public enum RFCWeekDay {
     case
         monday,
@@ -57,7 +98,7 @@ extension RFCWeekDay: Comparable {
     }
 }
 
-extension RFCWeekDay: WeekDayCompat {
+extension RFCWeekDay: WeekDayCompatibility {
     public func toWeekDay() -> WeekDay {
         switch self {
         case .monday: return .monday
@@ -73,7 +114,7 @@ extension RFCWeekDay: WeekDayCompat {
 
 // MARK: -
 
-public enum RFCNthWeekDay: Hashable {
+public enum RFCNWeekDay: Hashable {
     case
         monday(_: Int = 0),
         tuesday(_: Int = 0),
@@ -106,8 +147,8 @@ public enum RFCNthWeekDay: Hashable {
 }
 
 // Swift 5.3 has synthesized enum Comparable, but this enables earlier version support.
-extension RFCNthWeekDay: Comparable {
-    public static func < (lhs: RFCNthWeekDay, rhs: RFCNthWeekDay) -> Bool {
+extension RFCNWeekDay: Comparable {
+    public static func < (lhs: RFCNWeekDay, rhs: RFCNWeekDay) -> Bool {
         return (lhs != rhs) && (lhs == Self.minimum(lhs, rhs))
     }
 
@@ -131,7 +172,7 @@ extension RFCNthWeekDay: Comparable {
     }
 }
 
-extension RFCNthWeekDay: RFCWeekDayCompat {
+extension RFCNWeekDay: RFCWeekDayCompatibility {
     public func toRFCWeekDay() -> RFCWeekDay {
         switch (self) {
         case .monday(_): return .monday
@@ -153,17 +194,25 @@ public struct RFCOutset {
 }
 
 public struct RFCRRule {
-    var freq: Frequency = .yearly
+    // These are propagated as-as in recurrence criteria.
+    var freq: RFCFrequency = .yearly
     var interval: Int = 1
     var wkst: RFCWeekDay = .monday
     var count: Int? = nil
     var until: Date? = nil
-    var bysetpos: OrdSetting = .none
+
+    // When all absent, configuration uses dtstart to synthesize default recurrence criteria.
+    // These defaults are propagated as homogenized ordinal recurrence criteria based on freq.
+    // Consequently, defaults may contextually override user inputs.
     var bymonth: MonthSetting = .none
-    var bymonthday: OrdSetting = .none
+    var bymonthday: OrdSetting = .none // †
+    var byweekday: BimodalWeekDaySetting = .none // †
+    // † these values are also partitioned into each/eachN subsets in recurrence criteria
+
+    // These are propagated as homogenized ordinal representations in recurrence criteria.
+    var bysetpos: OrdSetting = .none
     var byyearday: OrdSetting = .none
     var byweekno: OrdSetting = .none
-    var byweekday: BimodalWeekDaySetting = .none
     var byhour: OrdSetting = .none
     var byminute: OrdSetting = .none
     var bysecond: OrdSetting = .none

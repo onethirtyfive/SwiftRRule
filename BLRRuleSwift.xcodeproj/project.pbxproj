@@ -10,14 +10,14 @@
 		D8278118259CD4DB00A1B6CA /* SwiftDate in Frameworks */ = {isa = PBXBuildFile; productRef = D8278117259CD4DB00A1B6CA /* SwiftDate */; };
 		D8336130259CA36300E802D6 /* BLRRuleSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8336126259CA36300E802D6 /* BLRRuleSwift.framework */; };
 		D8609BAE259CAFC300DC5109 /* Nimble in Frameworks */ = {isa = PBXBuildFile; productRef = D8609BAD259CAFC300DC5109 /* Nimble */; };
-		D87BF87225A07B91006EAAC1 /* Frequency.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87BF87025A07B91006EAAC1 /* Frequency.swift */; };
-		D8ABFD3225A072FC0066BDB2 /* WeekDay+RFCWeekdayCompat.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8ABFD3125A072FC0066BDB2 /* WeekDay+RFCWeekdayCompat.swift */; };
-		D8ABFD3825A0732F0066BDB2 /* ConfigureForRRuleDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8ABFD3725A0732F0066BDB2 /* ConfigureForRRuleDefinition.swift */; };
+		D87BF87225A07B91006EAAC1 /* RFCFrequency.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87BF87025A07B91006EAAC1 /* RFCFrequency.swift */; };
+		D8ABFD3225A072FC0066BDB2 /* WeekDay+RFCWeekdayCompatibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8ABFD3125A072FC0066BDB2 /* WeekDay+RFCWeekdayCompatibility.swift */; };
+		D8ABFD3825A0732F0066BDB2 /* ConfigureInputs.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8ABFD3725A0732F0066BDB2 /* ConfigureInputs.swift */; };
 		D8ABFD4B25A074100066BDB2 /* Iterable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8ABFD4A25A074100066BDB2 /* Iterable.swift */; };
 		D8ABFD4F25A074290066BDB2 /* Queryable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8ABFD4E25A074290066BDB2 /* Queryable.swift */; };
-		D8B6A6B425A135150050A157 /* ConfigureForRRuleDefinitionSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8B6A6B325A135150050A157 /* ConfigureForRRuleDefinitionSpec.swift */; };
+		D8B6A6B425A135150050A157 /* ConfigureInputsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8B6A6B325A135150050A157 /* ConfigureInputsSpec.swift */; };
 		D8B6A6BD25A137D20050A157 /* Quick in Frameworks */ = {isa = PBXBuildFile; productRef = D8B6A6BC25A137D20050A157 /* Quick */; };
-		D8DA196025A428B9001AC180 /* Compat.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8DA195F25A428B9001AC180 /* Compat.swift */; };
+		D8DA196025A428B9001AC180 /* Compatibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8DA195F25A428B9001AC180 /* Compatibility.swift */; };
 		D8DA197A25A4673F001AC180 /* RFC5545.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8DA197925A4673F001AC180 /* RFC5545.swift */; };
 /* End PBXBuildFile section */
 
@@ -39,13 +39,13 @@
 		D8609B8B259CA71D00DC5109 /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 		D8609B9C259CA8D100DC5109 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = Source/Info.plist; sourceTree = "<group>"; };
 		D8609B9F259CA8EA00DC5109 /* BLRRuleSwift.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = BLRRuleSwift.podspec; sourceTree = "<group>"; };
-		D87BF87025A07B91006EAAC1 /* Frequency.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Frequency.swift; path = Source/Types/Frequency.swift; sourceTree = "<group>"; };
-		D8ABFD3125A072FC0066BDB2 /* WeekDay+RFCWeekdayCompat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WeekDay+RFCWeekdayCompat.swift"; sourceTree = "<group>"; };
-		D8ABFD3725A0732F0066BDB2 /* ConfigureForRRuleDefinition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ConfigureForRRuleDefinition.swift; path = Source/ConfigureForRRuleDefinition.swift; sourceTree = "<group>"; };
+		D87BF87025A07B91006EAAC1 /* RFCFrequency.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RFCFrequency.swift; path = Source/Types/RFCFrequency.swift; sourceTree = "<group>"; };
+		D8ABFD3125A072FC0066BDB2 /* WeekDay+RFCWeekdayCompatibility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WeekDay+RFCWeekdayCompatibility.swift"; sourceTree = "<group>"; };
+		D8ABFD3725A0732F0066BDB2 /* ConfigureInputs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ConfigureInputs.swift; path = Source/ConfigureInputs.swift; sourceTree = "<group>"; };
 		D8ABFD4A25A074100066BDB2 /* Iterable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Iterable.swift; path = Source/Protocols/Iterable.swift; sourceTree = "<group>"; };
 		D8ABFD4E25A074290066BDB2 /* Queryable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Queryable.swift; path = Source/Protocols/Queryable.swift; sourceTree = "<group>"; };
-		D8B6A6B325A135150050A157 /* ConfigureForRRuleDefinitionSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ConfigureForRRuleDefinitionSpec.swift; path = Tests/ConfigureForRRuleDefinitionSpec.swift; sourceTree = "<group>"; };
-		D8DA195F25A428B9001AC180 /* Compat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Compat.swift; path = Source/Protocols/Compat.swift; sourceTree = "<group>"; };
+		D8B6A6B325A135150050A157 /* ConfigureInputsSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ConfigureInputsSpec.swift; path = Tests/ConfigureInputsSpec.swift; sourceTree = "<group>"; };
+		D8DA195F25A428B9001AC180 /* Compatibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Compatibility.swift; path = Source/Protocols/Compatibility.swift; sourceTree = "<group>"; };
 		D8DA197925A4673F001AC180 /* RFC5545.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RFC5545.swift; path = Source/Types/RFC5545.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -102,7 +102,7 @@
 		D8609B5C259CA40B00DC5109 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				D8B6A6B325A135150050A157 /* ConfigureForRRuleDefinitionSpec.swift */,
+				D8B6A6B325A135150050A157 /* ConfigureInputsSpec.swift */,
 				D8609B5D259CA41800DC5109 /* Supporting Files */,
 			);
 			name = Tests;
@@ -128,7 +128,7 @@
 		D8609B8F259CA7D800DC5109 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				D8ABFD3725A0732F0066BDB2 /* ConfigureForRRuleDefinition.swift */,
+				D8ABFD3725A0732F0066BDB2 /* ConfigureInputs.swift */,
 				D87BF86E25A07B7E006EAAC1 /* Types */,
 				D8ABFD4125A073AC0066BDB2 /* Protocols */,
 				D8ABFD3025A072FC0066BDB2 /* Categories */,
@@ -148,7 +148,7 @@
 		D87BF86E25A07B7E006EAAC1 /* Types */ = {
 			isa = PBXGroup;
 			children = (
-				D87BF87025A07B91006EAAC1 /* Frequency.swift */,
+				D87BF87025A07B91006EAAC1 /* RFCFrequency.swift */,
 				D8DA197925A4673F001AC180 /* RFC5545.swift */,
 			);
 			name = Types;
@@ -157,7 +157,7 @@
 		D8ABFD3025A072FC0066BDB2 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
-				D8ABFD3125A072FC0066BDB2 /* WeekDay+RFCWeekdayCompat.swift */,
+				D8ABFD3125A072FC0066BDB2 /* WeekDay+RFCWeekdayCompatibility.swift */,
 			);
 			name = Categories;
 			path = Source/Categories;
@@ -168,7 +168,7 @@
 			children = (
 				D8ABFD4E25A074290066BDB2 /* Queryable.swift */,
 				D8ABFD4A25A074100066BDB2 /* Iterable.swift */,
-				D8DA195F25A428B9001AC180 /* Compat.swift */,
+				D8DA195F25A428B9001AC180 /* Compatibility.swift */,
 			);
 			name = Protocols;
 			sourceTree = "<group>";
@@ -294,12 +294,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				D8ABFD4F25A074290066BDB2 /* Queryable.swift in Sources */,
-				D8ABFD3825A0732F0066BDB2 /* ConfigureForRRuleDefinition.swift in Sources */,
+				D8ABFD3825A0732F0066BDB2 /* ConfigureInputs.swift in Sources */,
 				D8DA197A25A4673F001AC180 /* RFC5545.swift in Sources */,
 				D8ABFD4B25A074100066BDB2 /* Iterable.swift in Sources */,
-				D8ABFD3225A072FC0066BDB2 /* WeekDay+RFCWeekdayCompat.swift in Sources */,
-				D87BF87225A07B91006EAAC1 /* Frequency.swift in Sources */,
-				D8DA196025A428B9001AC180 /* Compat.swift in Sources */,
+				D8ABFD3225A072FC0066BDB2 /* WeekDay+RFCWeekdayCompatibility.swift in Sources */,
+				D87BF87225A07B91006EAAC1 /* RFCFrequency.swift in Sources */,
+				D8DA196025A428B9001AC180 /* Compatibility.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -307,7 +307,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D8B6A6B425A135150050A157 /* ConfigureForRRuleDefinitionSpec.swift in Sources */,
+				D8B6A6B425A135150050A157 /* ConfigureInputsSpec.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,10 +8,10 @@
 import Foundation
 import SwiftDate
 
-protocol RFCWeekDayCompat {
+protocol RFCWeekDayCompatibility {
     func toRFCWeekDay() -> RFCWeekDay
 }
 
-protocol WeekDayCompat {
+protocol WeekDayCompatibility {
     func toWeekDay() -> WeekDay
 }
