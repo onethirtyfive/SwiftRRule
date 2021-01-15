@@ -9,7 +9,7 @@ import Foundation
 import SwiftDate
 
 public typealias Multi<T:Hashable> = Set<T>
-public typealias MultiOrd = Multi<Ord>
+public typealias MultiNumber = Multi<Int>
 public typealias MultiMonth = Multi<Month>
 public typealias MultiWeekDay = Multi<RFCWeekDay>
-public typealias MultiNWeekDay = Multi<RFCNWeekDay>
+public typealias MultiOrdWeekDay = Multi<RFCOrdWeekDay>

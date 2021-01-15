@@ -52,11 +52,11 @@ class CriteriaSharedExamplesConfiguration: QuickConfiguration {
 
         let
             reference = "2021-01-01T00:00:00.815479Z".toDate()!.date,
-            anchoredCriterion = AnchoredCriterion<Ord>(.none, anchor: reference.day)
+            anchoredCriterion = AnchoredCriterion<Number>(.none, anchor: reference.day)
 
-        sharedExamplesForUnanchored("flattens ordinal detail", Criterion<Ord>(.none))
+        sharedExamplesForUnanchored("flattens number detail", Criterion<Number>(.none))
         sharedExamplesForUnanchored("flattens month detail", Criterion<Month>(.none))
-        sharedExamplesForAnchored("flattens ordinal detail", anchoredCriterion)
+        sharedExamplesForAnchored("flattens number detail", anchoredCriterion)
     }
 }
 
@@ -64,17 +64,17 @@ class CriteriaSpec: QuickSpec {
     override func spec() {
         let reference = "2021-01-01T00:00:00.815479Z".toDate()!.date
 
-        // MARK: Criterion<Ord>
+        // MARK: Criterion<Number>
 
-        describe("Criterion<Ord>") {
+        describe("Criterion<Number>") {
             let
-                whichMany = Criterion<Ord>(.many([1,2,3])),
-                whichOne = Criterion<Ord>(.one(1)),
-                whichNone = Criterion<Ord>(.none)
+                whichMany = Criterion<Number>(.many([1,2,3])),
+                whichOne = Criterion<Number>(.one(1)),
+                whichNone = Criterion<Number>(.none)
 
-            itBehavesLike("unanchored: flattens ordinal detail") { ["flattenable": whichMany] }
-            itBehavesLike("unanchored: flattens ordinal detail") { ["flattenable": whichOne] }
-            itBehavesLike("unanchored: flattens ordinal detail") { ["flattenable": whichNone] }
+            itBehavesLike("unanchored: flattens number detail") { ["flattenable": whichMany] }
+            itBehavesLike("unanchored: flattens number detail") { ["flattenable": whichOne] }
+            itBehavesLike("unanchored: flattens number detail") { ["flattenable": whichNone] }
         }
 
         // MARK: Criterion<Month>
@@ -89,30 +89,30 @@ class CriteriaSpec: QuickSpec {
             itBehavesLike("unanchored: flattens month detail") { ["flattenable": whichNone] }
         }
 
-        // MARK: AnchoredCriterion<Ord> for hour
+        // MARK: AnchoredCriterion<Number> for hour
 
-        describe("AnchoredCriterion<Ord>") {
+        describe("AnchoredCriterion<Number>") {
             let
                 hour = reference.hour,
-                whichMany = AnchoredCriterion<Ord>(.many([1,15,-1]), anchor: hour),
-                whichOne = AnchoredCriterion<Ord>(.one(13), anchor: hour),
-                whichNone = AnchoredCriterion<Ord>(.none, anchor: hour)
+                whichMany = AnchoredCriterion<Number>(.many([1,15,-1]), anchor: hour),
+                whichOne = AnchoredCriterion<Number>(.one(13), anchor: hour),
+                whichNone = AnchoredCriterion<Number>(.none, anchor: hour)
 
-            itBehavesLike("anchored: flattens ordinal detail") {
+            itBehavesLike("anchored: flattens number detail") {
                 [
                     "flattenable": whichMany,
                     "anchor": hour
                 ]
             }
 
-            itBehavesLike("anchored: flattens ordinal detail") {
+            itBehavesLike("anchored: flattens number detail") {
                 [
                     "flattenable": whichOne,
                     "anchor": hour
                 ]
             }
 
-            itBehavesLike("anchored: flattens ordinal detail") {
+            itBehavesLike("anchored: flattens number detail") {
                 [
                     "flattenable": whichNone,
                     "anchor": hour
@@ -120,73 +120,73 @@ class CriteriaSpec: QuickSpec {
             }
         }
 
-        // MARK: MonthdayCriterion<Ord,Ord,Ord>
+        // MARK: MonthdayCriterion<Number,Number,Number>
 
-        describe("MonthdayCriterion<Ord,Ord,Ord>") {
+        describe("MonthdayCriterion<Number,Number,Number>") {
             context("with many monthday") {
-                let criterion = MonthdayCriterion<Ord,Ord,Ord>(.many([1,2,3,-4]))
+                let criterion = MonthdayCriterion<Number,Number,Number>(.many([1,2,3,-4]))
 
                 it("yields correct partitioned weekdays") {
-                    let (manyMonthday, manyNMonthday) = criterion.partitioned
+                    let (manyMonthday, manyOrdMonthday) = criterion.partitioned
                     expect(manyMonthday).to(equal([1,2,3]))
-                    expect(manyNMonthday).to(equal([-4]))
+                    expect(manyOrdMonthday).to(equal([-4]))
                 }
             }
 
             context("with one monthday") {
-                let criterion = MonthdayCriterion<Ord,Ord,Ord>(.one(-4))
+                let criterion = MonthdayCriterion<Number,Number,Number>(.one(-4))
 
                 it("yields correct partitioned weekdays") {
-                    let (manyMonthday, manyNMonthday) = criterion.partitioned
+                    let (manyMonthday, manyOrdMonthday) = criterion.partitioned
                     expect(manyMonthday).to(beEmpty())
-                    expect(manyNMonthday).to(equal([-4]))
+                    expect(manyOrdMonthday).to(equal([-4]))
                 }
             }
 
             context("with none monthday") {
-                let criterion = MonthdayCriterion<Ord,Ord,Ord>(.none)
+                let criterion = MonthdayCriterion<Number,Number,Number>(.none)
 
                 it("yields correct partitioned weekdays") {
-                    let (manyMonthday, manyNMonthday) = criterion.partitioned
+                    let (manyMonthday, manyOrdMonthday) = criterion.partitioned
                     expect(manyMonthday).to(beEmpty())
-                    expect(manyNMonthday).to(beEmpty())
+                    expect(manyOrdMonthday).to(beEmpty())
                 }
             }
         }
 
-        // MARK: WeekDayCriterion<BimodalWeekDay,RFCWeekDay,RFCNWeekDay>
+        // MARK: WeekDayCriterion<BimodalWeekDay,RFCWeekDay,RFCOrdWeekDay>
 
-        describe("WeekDayCriterion<BimodalWeekDay,RFCWeekDay,RFCNWeekDay") {
+        describe("WeekDayCriterion<BimodalWeekDay,RFCWeekDay,RFCOrdWeekDay") {
             context("with many weekday") {
                 context("ignoring n") {
-                    let criterion = WeekDayCriterion<BimodalWeekDay,RFCWeekDay,RFCNWeekDay>(
+                    let criterion = WeekDayCriterion<BimodalWeekDay,RFCWeekDay,RFCOrdWeekDay>(
                         .many([.each(.monday),.eachN(.tuesday(1))]),
                         ignoreN: true
                     )
 
                     it("yields correct partitioned weekdays") {
-                        let (manyWeekDay, manyNWeekDay) = criterion.partitioned
+                        let (manyWeekDay, manyOrdWeekDay) = criterion.partitioned
                         expect(manyWeekDay).to(equal([.monday,.tuesday]))
-                        expect(manyNWeekDay).to(beEmpty())
+                        expect(manyOrdWeekDay).to(beEmpty())
                     }
                 }
 
                 context("not ignoring n") {
-                    let criterion = WeekDayCriterion<BimodalWeekDay,RFCWeekDay,RFCNWeekDay>(
+                    let criterion = WeekDayCriterion<BimodalWeekDay,RFCWeekDay,RFCOrdWeekDay>(
                         .many([.each(.monday),.eachN(.tuesday(1))]),
                         ignoreN: false
                     )
 
                     it("yields correct partitioned weekdays") {
-                        let (manyWeekDay, manyNWeekDay) = criterion.partitioned
+                        let (manyWeekDay, manyOrdWeekDay) = criterion.partitioned
                         expect(manyWeekDay).to(equal([.monday]))
-                        expect(manyNWeekDay).to(equal([.tuesday(1)]))
+                        expect(manyOrdWeekDay).to(equal([.tuesday(1)]))
                     }
                 }
             }
 
             context("with one weekday") {
-                let criterion = WeekDayCriterion<BimodalWeekDay,RFCWeekDay,RFCNWeekDay>(
+                let criterion = WeekDayCriterion<BimodalWeekDay,RFCWeekDay,RFCOrdWeekDay>(
                     .one(.each(.friday)),
                     ignoreN: true
                 )
@@ -198,14 +198,14 @@ class CriteriaSpec: QuickSpec {
             }
 
             context("with none weekday") {
-                let criterion = WeekDayCriterion<BimodalWeekDay,RFCWeekDay,RFCNWeekDay>(
+                let criterion = WeekDayCriterion<BimodalWeekDay,RFCWeekDay,RFCOrdWeekDay>(
                     .none, ignoreN: true
                 )
 
                 it("yields correct partitioned weekdays") {
-                    let (manyWeekDay, manyNWeekDay) = criterion.partitioned
+                    let (manyWeekDay, manyOrdWeekDay) = criterion.partitioned
                     expect(manyWeekDay).to(beEmpty())
-                    expect(manyNWeekDay).to(beEmpty())
+                    expect(manyOrdWeekDay).to(beEmpty())
                 }
             }
         }
@@ -231,9 +231,9 @@ class CriteriaSpec: QuickSpec {
                 expect(criteria.normalMinute).to(equal([0])) // anchored
                 expect(criteria.normalSecond).to(equal([0])) // anchored
                 expect(criteria.normalMonthday).to(equal([1])) //anchored
-                expect(criteria.normalNMonthday).to(beEmpty())
+                expect(criteria.normalOrdMonthday).to(beEmpty())
                 expect(criteria.normalWeekDay).to(beEmpty())
-                expect(criteria.normalNWeekDay).to(beEmpty())
+                expect(criteria.normalOrdWeekDay).to(beEmpty())
             }
         }
     }

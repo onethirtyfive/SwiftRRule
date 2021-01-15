@@ -58,43 +58,43 @@ class RFC5545Spec: QuickSpec {
             }
         }
 
-        describe("RFCNWeekDay") {
+        describe("RFCOrdWeekDay") {
             describe("hashing") {
                 it("works") {
                     var
                         weekDayHasher: Hasher = Hasher(),
-                        nWeekDayHasher: Hasher = Hasher()
+                        ordWeekDayHasher: Hasher = Hasher()
 
                     weekDayHasher.combine(RFCWeekDay.monday)
-                    nWeekDayHasher.combine(RFCNWeekDay.monday(3))
+                    ordWeekDayHasher.combine(RFCOrdWeekDay.monday(3))
 
                     expect(
                         weekDayHasher.finalize()
-                    ).notTo(equal(nWeekDayHasher.finalize()))
+                    ).notTo(equal(ordWeekDayHasher.finalize()))
                 }
             }
 
             describe("comparison") {
                 it("works") {
                     // n-weekday comparison simply requires
-                    expect(RFCNWeekDay.tuesday(-1)).to(beGreaterThan(.monday(1)))
-                    expect(RFCNWeekDay.wednesday(1)).to(beGreaterThan(.tuesday(-1)))
-                    expect(RFCNWeekDay.thursday(1)).to(beGreaterThan(.wednesday(1)))
-                    expect(RFCNWeekDay.friday(1)).to(beGreaterThan(.thursday(1)))
-                    expect(RFCNWeekDay.saturday(0)).to(beGreaterThan(.friday(0)))
-                    expect(RFCNWeekDay.sunday(-1)).to(beGreaterThan(.saturday(-1)))
+                    expect(RFCOrdWeekDay.tuesday(-1)).to(beGreaterThan(.monday(1)))
+                    expect(RFCOrdWeekDay.wednesday(1)).to(beGreaterThan(.tuesday(-1)))
+                    expect(RFCOrdWeekDay.thursday(1)).to(beGreaterThan(.wednesday(1)))
+                    expect(RFCOrdWeekDay.friday(1)).to(beGreaterThan(.thursday(1)))
+                    expect(RFCOrdWeekDay.saturday(0)).to(beGreaterThan(.friday(0)))
+                    expect(RFCOrdWeekDay.sunday(-1)).to(beGreaterThan(.saturday(-1)))
                 }
             }
 
             describe("RFCWeekDay interoperability") {
                 it("works") {
-                    expect(RFCNWeekDay.monday(1).rfcWeekDay).to(equal(RFCWeekDay.monday))
-                    expect(RFCNWeekDay.tuesday(1).rfcWeekDay).to(equal(RFCWeekDay.tuesday))
-                    expect(RFCNWeekDay.wednesday(1).rfcWeekDay).to(equal(RFCWeekDay.wednesday))
-                    expect(RFCNWeekDay.thursday(1).rfcWeekDay).to(equal(RFCWeekDay.thursday))
-                    expect(RFCNWeekDay.friday(1).rfcWeekDay).to(equal(RFCWeekDay.friday))
-                    expect(RFCNWeekDay.saturday(1).rfcWeekDay).to(equal(RFCWeekDay.saturday))
-                    expect(RFCNWeekDay.sunday(1).rfcWeekDay).to(equal(RFCWeekDay.sunday))
+                    expect(RFCOrdWeekDay.monday(1).rfcWeekDay).to(equal(RFCWeekDay.monday))
+                    expect(RFCOrdWeekDay.tuesday(1).rfcWeekDay).to(equal(RFCWeekDay.tuesday))
+                    expect(RFCOrdWeekDay.wednesday(1).rfcWeekDay).to(equal(RFCWeekDay.wednesday))
+                    expect(RFCOrdWeekDay.thursday(1).rfcWeekDay).to(equal(RFCWeekDay.thursday))
+                    expect(RFCOrdWeekDay.friday(1).rfcWeekDay).to(equal(RFCWeekDay.friday))
+                    expect(RFCOrdWeekDay.saturday(1).rfcWeekDay).to(equal(RFCWeekDay.saturday))
+                    expect(RFCOrdWeekDay.sunday(1).rfcWeekDay).to(equal(RFCWeekDay.sunday))
                 }
             }
         }
@@ -144,15 +144,15 @@ class RFC5545Spec: QuickSpec {
                     }.notTo(throwError())
                 }
 
-                it("throws when provided month ordinal is unintelligible") {
+                it("throws when provided month number is unintelligible") {
                     expect {
-                        try RFCWhence().validate(monthOrd: 13)
+                        try RFCWhence().validate(monthNumber: 13)
                     }.to(throwError(RFCWhenceError.invalidMonth(value: 3)))
                 }
 
-                it("throws when provided weekday ordinal is unintelligible") {
+                it("throws when provided weekday number is unintelligible") {
                     expect {
-                        try RFCWhence().validate(weekdayOrd: 8)
+                        try RFCWhence().validate(weekdayNumber: 8)
                     }.to(throwError(RFCWhenceError.invalidWeekday(value: 8)))
                 }
             }
@@ -197,7 +197,7 @@ class RFC5545Spec: QuickSpec {
                 }
 
                 it("sets bymonth to .none") {
-                    expect(RFCRRuleDetails().bymonthday).to(equal(OrdDetail.none))
+                    expect(RFCRRuleDetails().bymonthday).to(equal(NumberDetail.none))
                 }
 
                 it("sets byweekday to .none") {
@@ -207,27 +207,27 @@ class RFC5545Spec: QuickSpec {
                 }
 
                 it("sets bysetpos to .none") {
-                    expect(RFCRRuleDetails().bysetpos).to(equal(OrdDetail.none))
+                    expect(RFCRRuleDetails().bysetpos).to(equal(NumberDetail.none))
                 }
 
                 it("sets byyearday to .none") {
-                    expect(RFCRRuleDetails().byyearday).to(equal(OrdDetail.none))
+                    expect(RFCRRuleDetails().byyearday).to(equal(NumberDetail.none))
                 }
 
                 it("sets byweekno to .none") {
-                    expect(RFCRRuleDetails().byweekno).to(equal(OrdDetail.none))
+                    expect(RFCRRuleDetails().byweekno).to(equal(NumberDetail.none))
                 }
 
                 it("sets byhour to .none") {
-                    expect(RFCRRuleDetails().byhour).to(equal(OrdDetail.none))
+                    expect(RFCRRuleDetails().byhour).to(equal(NumberDetail.none))
                 }
 
                 it("sets byminute to .none") {
-                    expect(RFCRRuleDetails().byminute).to(equal(OrdDetail.none))
+                    expect(RFCRRuleDetails().byminute).to(equal(NumberDetail.none))
                 }
 
                 it("sets bysecond to .none") {
-                    expect(RFCRRuleDetails().bysecond).to(equal(OrdDetail.none))
+                    expect(RFCRRuleDetails().bysecond).to(equal(NumberDetail.none))
                 }
             }
 
@@ -588,7 +588,7 @@ class RFC5545Spec: QuickSpec {
                             rfcRRuleDetails.anchored(.yearly, to: reference)
                         }
 
-                        it("sets bymonthday to one--that of dtstart's day ordinal") {
+                        it("sets bymonthday to one--that of dtstart's day number") {
                             expect(anchored().bymonthday).to(equal(.one(reference.day)))
                         }
 
@@ -651,7 +651,7 @@ class RFC5545Spec: QuickSpec {
                                 rfcRRuleDetails.anchored(.yearly, to: reference)
                             }
 
-                            it("sets bymonth to one--the Month for dtstart's month ordinal") {
+                            it("sets bymonth to one--the Month for dtstart's month number") {
                                 expect(
                                     anchored().bymonth
                                 ).to(equal(.one(Month(rawValue: reference.month - 1)!)))
@@ -668,7 +668,7 @@ class RFC5545Spec: QuickSpec {
                             rfcRRuleDetails.anchored(.monthly, to: reference)
                         }
 
-                        it("sets bymonthday to one--that of dtstart's day ordinal") {
+                        it("sets bymonthday to one--that of dtstart's day number") {
                             expect(
                                 anchored().bymonthday
                             ).to(equal(.one(reference.day)))
@@ -691,7 +691,7 @@ class RFC5545Spec: QuickSpec {
                             rfcRRuleDetails.anchored(.weekly, to: reference)
                         }
 
-                        it("sets bymonthday to one--the RFCWeekDay for dtstart's weekday ordinal") {
+                        it("sets bymonthday to one--the RFCWeekDay for dtstart's weekday number") {
                             expect(
                                 anchored().byweekday
                             ).to(equal(
@@ -738,7 +738,7 @@ class RFC5545Spec: QuickSpec {
                     }.notTo(throwError())
 
                     expect {
-                        try RFCRRuleDetails().validate(bysetpos: OrdDetail.none)
+                        try RFCRRuleDetails().validate(bysetpos: NumberDetail.none)
                     }.notTo(throwError())
                 }
 
@@ -752,9 +752,9 @@ class RFC5545Spec: QuickSpec {
                     }.to(throwError(RFCRRuleDetailsError.invalidSetpos(value: -4342)))
                 }
 
-                it("throws when provided weekday ordinal is unintelligible") {
+                it("throws when provided weekday number is unintelligible") {
                     expect {
-                        try RFCWhence().validate(weekdayOrd: 8)
+                        try RFCWhence().validate(weekdayNumber: 8)
                     }.to(throwError(RFCWhenceError.invalidWeekday(value: 8)))
                 }
             }

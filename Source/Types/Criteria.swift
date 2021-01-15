@@ -110,17 +110,17 @@ public struct WeekDayCriterion<T: Hashable & Equatable,U: Hashable, V:Hashable>:
         get {
             var
                 manyWeekDay: Multi<U> = [],
-                manyNWeekDay: Multi<V> = []
+                manyOrdWeekDay: Multi<V> = []
 
             let contextualUpdate = { (bimodalWeekDay: BimodalWeekDay) -> Void in
                 switch bimodalWeekDay {
                 case .each(let weekDay):
                     manyWeekDay.update(with: weekDay as! U)
-                case .eachN(let nWeekDay):
+                case .eachN(let ordWeekDay):
                     if ignoreN {
-                        manyWeekDay.update(with: nWeekDay.rfcWeekDay as! U)
+                        manyWeekDay.update(with: ordWeekDay.rfcWeekDay as! U)
                     } else {
-                        manyNWeekDay.update(with: nWeekDay as! V)
+                        manyOrdWeekDay.update(with: ordWeekDay as! V)
                     }
                 }
             }
@@ -134,7 +134,7 @@ public struct WeekDayCriterion<T: Hashable & Equatable,U: Hashable, V:Hashable>:
                 break
             }
 
-            return (each: manyWeekDay, eachN: manyNWeekDay)
+            return (each: manyWeekDay, eachN: manyOrdWeekDay)
         }
     }
 
@@ -151,41 +151,41 @@ public typealias Parameters = RFCRRuleParameters
 
 public struct Criteria {
     let
-        whichSetpos: Criterion<Ord>,
-        whichYearday: Criterion<Ord>,
-        whichWeekno: Criterion<Ord>,
+        whichSetpos: Criterion<Number>,
+        whichYearday: Criterion<Number>,
+        whichWeekno: Criterion<Number>,
         whichMonth: Criterion<Month>,
-        whichHour: AnchoredCriterion<Ord>,
-        whichMinute: AnchoredCriterion<Ord>,
-        whichSecond: AnchoredCriterion<Ord>,
-        whichMonthday: MonthdayCriterion<Ord,Ord,Ord>,
-        whichWeekDay: WeekDayCriterion<BimodalWeekDay,RFCWeekDay,RFCNWeekDay>
+        whichHour: AnchoredCriterion<Number>,
+        whichMinute: AnchoredCriterion<Number>,
+        whichSecond: AnchoredCriterion<Number>,
+        whichMonthday: MonthdayCriterion<Number,Number,Number>,
+        whichWeekDay: WeekDayCriterion<BimodalWeekDay,RFCWeekDay,RFCOrdWeekDay>
 
     // MARK: -
 
-    var normalMonthday: MultiOrd {
+    var normalMonthday: MultiNumber {
         get {
             let (normalWeekDay, _) = whichMonthday.partitioned
             return normalWeekDay
         }
     }
 
-    var normalNMonthday: MultiOrd {
+    var normalOrdMonthday: MultiNumber {
         get {
-            let (_, normalNWeekDay) = whichMonthday.partitioned
-            return normalNWeekDay
+            let (_, normalOrdWeekDay) = whichMonthday.partitioned
+            return normalOrdWeekDay
         }
     }
 
-    var normalSetpos: MultiOrd {
+    var normalSetpos: MultiNumber {
         get { whichSetpos.flattened }
     }
 
-    var normalYearday: MultiOrd {
+    var normalYearday: MultiNumber {
         get { whichYearday.flattened }
     }
 
-    var normalWeekno: MultiOrd {
+    var normalWeekno: MultiNumber {
         get { whichWeekno.flattened }
     }
 
@@ -200,22 +200,22 @@ public struct Criteria {
         }
     }
 
-    var normalNWeekDay: MultiNWeekDay {
+    var normalOrdWeekDay: MultiOrdWeekDay {
         get {
-            let (_, normalNWeekDay) = whichWeekDay.partitioned
-            return normalNWeekDay
+            let (_, normalOrdWeekDay) = whichWeekDay.partitioned
+            return normalOrdWeekDay
         }
     }
 
-    var normalHour: MultiOrd {
+    var normalHour: MultiNumber {
         get { whichHour.flattened }
     }
 
-    var normalMinute: MultiOrd {
+    var normalMinute: MultiNumber {
         get { whichMinute.flattened }
     }
 
-    var normalSecond: MultiOrd {
+    var normalSecond: MultiNumber {
         get { whichSecond.flattened }
     }
 }

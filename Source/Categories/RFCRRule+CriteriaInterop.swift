@@ -12,26 +12,26 @@ extension RFCRRule: CriteriaInterop {
     var criteria: Criteria {
         get {
             let
-                setposCriterion = Criterion<Ord>(details.bysetpos),
-                yeardayCriterion = Criterion<Ord>(details.byyearday),
-                weeknoCriterion = Criterion<Ord>(details.byweekno),
+                setposCriterion = Criterion<Number>(details.bysetpos),
+                yeardayCriterion = Criterion<Number>(details.byyearday),
+                weeknoCriterion = Criterion<Number>(details.byweekno),
                 monthCriterion = Criterion<Month>(details.bymonth),
-                hourCriterion = AnchoredCriterion<Ord>(
+                hourCriterion = AnchoredCriterion<Number>(
                     details.byhour,
                     anchor: whence.dtstart.hour
                 ),
-                minuteCriterion = AnchoredCriterion<Ord>(
+                minuteCriterion = AnchoredCriterion<Number>(
                     details.byhour,
                     anchor: whence.dtstart.minute
                 ),
-                secondCriterion = AnchoredCriterion<Ord>(
+                secondCriterion = AnchoredCriterion<Number>(
                     details.byhour,
                     anchor: whence.dtstart.second
                 ),
                 monthdayCriterion =
-                    MonthdayCriterion<Ord,Ord,Ord>(details.bymonthday),
+                    MonthdayCriterion<Number,Number,Number>(details.bymonthday),
                 weekDayCriterion =
-                    WeekDayCriterion<BimodalWeekDay,RFCWeekDay,RFCNWeekDay>(
+                    WeekDayCriterion<BimodalWeekDay,RFCWeekDay,RFCOrdWeekDay>(
                         details.byweekday,
                         ignoreN: (parameters.freq > .monthly)
                     )

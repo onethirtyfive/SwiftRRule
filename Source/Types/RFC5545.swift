@@ -108,7 +108,7 @@ extension RFCWeekDay: WeekDayInterop {
 
 // MARK: -
 
-public enum RFCNWeekDay: Hashable {
+public enum RFCOrdWeekDay: Hashable {
     case
         monday(_: Int = 0),
         tuesday(_: Int = 0),
@@ -129,8 +129,8 @@ public enum RFCNWeekDay: Hashable {
 }
 
 // Swift 5.3 has synthesized enum Comparable, but this enables earlier version support.
-extension RFCNWeekDay: Equatable {
-    public static func == (lhs: RFCNWeekDay, rhs: RFCNWeekDay) -> Bool {
+extension RFCOrdWeekDay: Equatable {
+    public static func == (lhs: RFCOrdWeekDay, rhs: RFCOrdWeekDay) -> Bool {
         switch (lhs, rhs) {
         case
             (.monday(let leftN), .monday(let rightN)),
@@ -147,9 +147,9 @@ extension RFCNWeekDay: Equatable {
     }
 }
 
-extension RFCNWeekDay: Comparable {
-    public static func zeroCase(_ nWeekDay: RFCNWeekDay) -> Self {
-        switch nWeekDay {
+extension RFCOrdWeekDay: Comparable {
+    public static func zeroCase(_ ordWeekDay: RFCOrdWeekDay) -> Self {
+        switch ordWeekDay {
         case .monday(_):
             return .monday(0)
         case .tuesday(_):
@@ -187,7 +187,7 @@ extension RFCNWeekDay: Comparable {
         }
     }
 
-    public static func < (lhs: RFCNWeekDay, rhs: RFCNWeekDay) -> Bool {
+    public static func < (lhs: RFCOrdWeekDay, rhs: RFCOrdWeekDay) -> Bool {
         // Comparison ignores 'n'
         let
             lhsZero = Self.zeroCase(lhs),
@@ -197,7 +197,7 @@ extension RFCNWeekDay: Comparable {
     }
 }
 
-extension RFCNWeekDay: RFCWeekDayInterop {
+extension RFCOrdWeekDay: RFCWeekDayInterop {
     var rfcWeekDay: RFCWeekDay {
         switch (self) {
         case .monday(_): return .monday
@@ -215,12 +215,12 @@ extension RFCNWeekDay: RFCWeekDayInterop {
 
 public enum BimodalWeekDay: Hashable {
     case each(_: RFCWeekDay)
-    case eachN(_: RFCNWeekDay)
+    case eachN(_: RFCOrdWeekDay)
 
     public func hash(into hasher: inout Hasher) {
         switch self {
         case .each(let weekDay): hasher.combine(weekDay)
-        case .eachN(let nWeekDay): hasher.combine(nWeekDay)
+        case .eachN(let ordWeekDay): hasher.combine(ordWeekDay)
         }
     }
 }
@@ -231,8 +231,8 @@ public enum Cardinality<T: Hashable & Equatable>: Equatable {
     case none
 }
 
-public typealias Ord = Int
-public typealias OrdDetail = Cardinality<Ord>
+public typealias Number = Int
+public typealias NumberDetail = Cardinality<Number>
 public typealias MonthDetail = Cardinality<Month>
 public typealias BimodalWeekDayDetail = Cardinality<BimodalWeekDay>
 
@@ -264,17 +264,17 @@ public struct RFCWhence {
     }
 
     // TODO: Better failure mode semantics.
-    public func validate(monthOrd: Int? = nil, weekdayOrd: Int? = nil)
+    public func validate(monthNumber: Int? = nil, weekdayNumber: Int? = nil)
         throws -> Void {
 
-        let monthOrd = monthOrd ?? dtstart.date.month
-        guard Month(rawValue: monthOrd - 1) != nil else {
-            throw RFCWhenceError.invalidMonth(value: monthOrd)
+        let monthNumber = monthNumber ?? dtstart.date.month
+        guard Month(rawValue: monthNumber - 1) != nil else {
+            throw RFCWhenceError.invalidMonth(value: monthNumber)
         }
 
-        let weekdayOrd = weekdayOrd ?? dtstart.date.weekday
-        guard WeekDay(rawValue: weekdayOrd) != nil else {
-            throw RFCWhenceError.invalidWeekday(value: weekdayOrd)
+        let weekdayNumber = weekdayNumber ?? dtstart.date.weekday
+        guard WeekDay(rawValue: weekdayNumber) != nil else {
+            throw RFCWhenceError.invalidWeekday(value: weekdayNumber)
         }
     }
 }
@@ -290,7 +290,7 @@ public struct RFCRRuleParameters {
         count: Int? = nil,
         until: Date? = nil
 
-    public func validate(monthOrd: Int? = nil, weekdayOrd: Int? = nil)
+    public func validate(monthNumber: Int? = nil, weekdayNumber: Int? = nil)
         throws -> Void {
     }
 }
@@ -304,17 +304,17 @@ public struct RFCRRuleDetails: Equatable {
     // for freq and dtstart in resulting criteria:
     var
         bymonth: MonthDetail = .none,
-        bymonthday: OrdDetail = .none, // †
+        bymonthday: NumberDetail = .none, // †
         byweekday: BimodalWeekDayDetail = .none // †
     // † these are also partitioned into and exposed as each/eachN subgroups in criteria
 
     var
-        bysetpos: OrdDetail = .none,
-        byyearday: OrdDetail = .none,
-        byweekno: OrdDetail = .none,
-        byhour: OrdDetail = .none,
-        byminute: OrdDetail = .none,
-        bysecond: OrdDetail = .none
+        bysetpos: NumberDetail = .none,
+        byyearday: NumberDetail = .none,
+        byweekno: NumberDetail = .none,
+        byhour: NumberDetail = .none,
+        byminute: NumberDetail = .none,
+        bysecond: NumberDetail = .none
 
     var isByweeknoAnchored: Bool {
             get {
@@ -409,7 +409,7 @@ public struct RFCRRuleDetails: Equatable {
     }
 
     // TODO: Better failure mode semantics.
-    public func validate(bysetpos: OrdDetail? = nil) throws -> Void {
+    public func validate(bysetpos: NumberDetail? = nil) throws -> Void {
         let
             bysetpos = bysetpos ?? self.bysetpos,
             testSetpos = { (setpos: Int) -> Bool in
@@ -448,7 +448,7 @@ public struct RFCRRule {
         self.details = details
     }
 
-    public func validate(monthOrd: Int? = nil, weekdayOrd: Int? = nil) throws {
+    public func validate(monthNumber: Int? = nil, weekdayNumber: Int? = nil) throws {
         try whence.validate()
         try parameters.validate()
         try details.validate()

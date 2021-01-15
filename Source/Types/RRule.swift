@@ -70,7 +70,7 @@ public struct Configuration {
     public let
         rrule: RRule, // built on rfcRRule provided by caller
         normalRRule: NormalRRule, // normalized, anchoring to dtstart if necessary
-        normalValidRRule: NormalValidRRule, // with sane ordinals
+        normalValidRRule: NormalValidRRule, // with sane details
         recurrable: Recurrable // workable record of recurrable
 
     init(_ rrule: RRule) throws {
