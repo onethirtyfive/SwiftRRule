@@ -9,24 +9,34 @@
 /* Begin PBXBuildFile section */
 		D80BBED425A7E2E000762B6F /* RRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80BBED325A7E2DF00762B6F /* RRule.swift */; };
 		D80BBEDC25A7E3BF00762B6F /* Multi.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80BBEDB25A7E3BF00762B6F /* Multi.swift */; };
-		D80BBF1A25AC088200762B6F /* Recurrable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80BBF1925AC088200762B6F /* Recurrable.swift */; };
-		D80BBF3C25AC2D0F00762B6F /* RFCRRule+CriteriaInterop.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80BBF3B25AC2D0F00762B6F /* RFCRRule+CriteriaInterop.swift */; };
+		D8247E9C25B195B800671808 /* Month+RFCMonthInterop.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8247E9B25B195B800671808 /* Month+RFCMonthInterop.swift */; };
+		D8247EC425B2E4F300671808 /* RFCDetailSetpos.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8247EC325B2E4F300671808 /* RFCDetailSetpos.swift */; };
+		D8247ED225B2EF5E00671808 /* RFCDetailWeekno.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8247ED125B2EF5E00671808 /* RFCDetailWeekno.swift */; };
+		D8247ED825B2F03C00671808 /* RFCDetailMonth.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8247ED725B2F03C00671808 /* RFCDetailMonth.swift */; };
+		D8247EE225B2F0C000671808 /* RFCDetailYearday.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8247EE125B2F0C000671808 /* RFCDetailYearday.swift */; };
+		D8247EE625B2F14500671808 /* RFCDetailMonthday.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8247EE525B2F14500671808 /* RFCDetailMonthday.swift */; };
+		D8247EEA25B2F20500671808 /* RFCDetailWeekDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8247EE925B2F20500671808 /* RFCDetailWeekDay.swift */; };
+		D8247EF225B2F80A00671808 /* RFC5545.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8247EF125B2F80A00671808 /* RFC5545.swift */; };
 		D8278118259CD4DB00A1B6CA /* SwiftDate in Frameworks */ = {isa = PBXBuildFile; productRef = D8278117259CD4DB00A1B6CA /* SwiftDate */; };
 		D8336130259CA36300E802D6 /* BLRRuleSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8336126259CA36300E802D6 /* BLRRuleSwift.framework */; };
 		D8609BAE259CAFC300DC5109 /* Nimble in Frameworks */ = {isa = PBXBuildFile; productRef = D8609BAD259CAFC300DC5109 /* Nimble */; };
-		D8ABFD3225A072FC0066BDB2 /* WeekDay+RFCWeekdayInterop.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8ABFD3125A072FC0066BDB2 /* WeekDay+RFCWeekdayInterop.swift */; };
+		D8ABFD3225A072FC0066BDB2 /* WeekDay+RFCWeekDayInterop.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8ABFD3125A072FC0066BDB2 /* WeekDay+RFCWeekDayInterop.swift */; };
 		D8ABFD4B25A074100066BDB2 /* Iterable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8ABFD4A25A074100066BDB2 /* Iterable.swift */; };
 		D8ABFD4F25A074290066BDB2 /* Queryable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8ABFD4E25A074290066BDB2 /* Queryable.swift */; };
+		D8ADF11E25B2FA3900629EEC /* RFCFrequency.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8ADF11D25B2FA3900629EEC /* RFCFrequency.swift */; };
+		D8ADF12225B2FA7C00629EEC /* RFCMonth.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8ADF12125B2FA7C00629EEC /* RFCMonth.swift */; };
+		D8ADF12625B2FAA500629EEC /* RFCWeekDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8ADF12525B2FAA500629EEC /* RFCWeekDay.swift */; };
+		D8ADF12A25B2FAD600629EEC /* RFCOrdWeekDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8ADF12925B2FAD600629EEC /* RFCOrdWeekDay.swift */; };
+		D8ADF12E25B2FBA100629EEC /* RFCRRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8ADF12D25B2FBA100629EEC /* RFCRRule.swift */; };
+		D8ADF18625B4144600629EEC /* RFCDetailHour.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8ADF18525B4144600629EEC /* RFCDetailHour.swift */; };
+		D8ADF18A25B4145B00629EEC /* RFCDetailMinute.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8ADF18925B4145B00629EEC /* RFCDetailMinute.swift */; };
+		D8ADF18E25B4147400629EEC /* RFCDetailSecond.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8ADF18D25B4147400629EEC /* RFCDetailSecond.swift */; };
 		D8B6A6BD25A137D20050A157 /* Quick in Frameworks */ = {isa = PBXBuildFile; productRef = D8B6A6BC25A137D20050A157 /* Quick */; };
 		D8C528EE25AD5EEF007B76C8 /* RRuleSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C528EC25AD5EEF007B76C8 /* RRuleSpec.swift */; };
 		D8C528EF25AD5EEF007B76C8 /* RFC5545Spec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C528ED25AD5EEF007B76C8 /* RFC5545Spec.swift */; };
-		D8C528FB25AD5FC5007B76C8 /* RecurrableSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C528FA25AD5FC5007B76C8 /* RecurrableSpec.swift */; };
-		D8C528FF25AD6009007B76C8 /* Criteria.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C528FE25AD6009007B76C8 /* Criteria.swift */; };
 		D8C5290B25AD812B007B76C8 /* CriteriaSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C5290A25AD812B007B76C8 /* CriteriaSpec.swift */; };
 		D8C5292525AEF4BE007B76C8 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C5292425AEF4BE007B76C8 /* Constants.swift */; };
-		D8C5292925AF7CCF007B76C8 /* YearInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C5292825AF7CCF007B76C8 /* YearInfo.swift */; };
 		D8DA196025A428B9001AC180 /* Interop.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8DA195F25A428B9001AC180 /* Interop.swift */; };
-		D8DA197A25A4673F001AC180 /* RFC5545.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8DA197925A4673F001AC180 /* RFC5545.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,8 +52,14 @@
 /* Begin PBXFileReference section */
 		D80BBED325A7E2DF00762B6F /* RRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RRule.swift; path = Source/Types/RRule.swift; sourceTree = "<group>"; };
 		D80BBEDB25A7E3BF00762B6F /* Multi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Multi.swift; path = Source/Types/Multi.swift; sourceTree = "<group>"; };
-		D80BBF1925AC088200762B6F /* Recurrable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Recurrable.swift; path = Source/Types/Recurrable.swift; sourceTree = "<group>"; };
-		D80BBF3B25AC2D0F00762B6F /* RFCRRule+CriteriaInterop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RFCRRule+CriteriaInterop.swift"; sourceTree = "<group>"; };
+		D8247E9B25B195B800671808 /* Month+RFCMonthInterop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Month+RFCMonthInterop.swift"; sourceTree = "<group>"; };
+		D8247EC325B2E4F300671808 /* RFCDetailSetpos.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RFCDetailSetpos.swift; path = Source/Types/RFC5545/Detail/RFCDetailSetpos.swift; sourceTree = "<group>"; };
+		D8247ED125B2EF5E00671808 /* RFCDetailWeekno.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RFCDetailWeekno.swift; path = Source/Types/RFC5545/Detail/RFCDetailWeekno.swift; sourceTree = "<group>"; };
+		D8247ED725B2F03C00671808 /* RFCDetailMonth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RFCDetailMonth.swift; path = Source/Types/RFC5545/Detail/RFCDetailMonth.swift; sourceTree = "<group>"; };
+		D8247EE125B2F0C000671808 /* RFCDetailYearday.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RFCDetailYearday.swift; path = Source/Types/RFC5545/Detail/RFCDetailYearday.swift; sourceTree = "<group>"; };
+		D8247EE525B2F14500671808 /* RFCDetailMonthday.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RFCDetailMonthday.swift; path = Source/Types/RFC5545/Detail/RFCDetailMonthday.swift; sourceTree = "<group>"; };
+		D8247EE925B2F20500671808 /* RFCDetailWeekDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RFCDetailWeekDay.swift; path = Source/Types/RFC5545/Detail/RFCDetailWeekDay.swift; sourceTree = "<group>"; };
+		D8247EF125B2F80A00671808 /* RFC5545.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RFC5545.swift; path = Source/Protocols/RFC5545.swift; sourceTree = "<group>"; };
 		D8278123259D116100A1B6CA /* Sandbox.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; name = Sandbox.playground; path = "../../../Library/Autosave Information/Sandbox.playground"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		D8336126259CA36300E802D6 /* BLRRuleSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BLRRuleSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D833612F259CA36300E802D6 /* BLRRuleSwiftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BLRRuleSwiftTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -51,19 +67,23 @@
 		D8609B8B259CA71D00DC5109 /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 		D8609B9C259CA8D100DC5109 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = Source/Info.plist; sourceTree = "<group>"; };
 		D8609B9F259CA8EA00DC5109 /* BLRRuleSwift.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = BLRRuleSwift.podspec; sourceTree = "<group>"; };
-		D8ABFD3125A072FC0066BDB2 /* WeekDay+RFCWeekdayInterop.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WeekDay+RFCWeekdayInterop.swift"; sourceTree = "<group>"; };
+		D8ABFD3125A072FC0066BDB2 /* WeekDay+RFCWeekDayInterop.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WeekDay+RFCWeekDayInterop.swift"; sourceTree = "<group>"; };
 		D8ABFD4A25A074100066BDB2 /* Iterable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Iterable.swift; path = Source/Protocols/Iterable.swift; sourceTree = "<group>"; };
 		D8ABFD4E25A074290066BDB2 /* Queryable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Queryable.swift; path = Source/Protocols/Queryable.swift; sourceTree = "<group>"; };
+		D8ADF11D25B2FA3900629EEC /* RFCFrequency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RFCFrequency.swift; path = Source/Types/RFC5545/RFCFrequency.swift; sourceTree = "<group>"; };
+		D8ADF12125B2FA7C00629EEC /* RFCMonth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RFCMonth.swift; path = Source/Types/RFC5545/RFCMonth.swift; sourceTree = "<group>"; };
+		D8ADF12525B2FAA500629EEC /* RFCWeekDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RFCWeekDay.swift; path = Source/Types/RFC5545/RFCWeekDay.swift; sourceTree = "<group>"; };
+		D8ADF12925B2FAD600629EEC /* RFCOrdWeekDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RFCOrdWeekDay.swift; path = Source/Types/RFC5545/RFCOrdWeekDay.swift; sourceTree = "<group>"; };
+		D8ADF12D25B2FBA100629EEC /* RFCRRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RFCRRule.swift; path = Source/Types/RFC5545/RFCRRule.swift; sourceTree = "<group>"; };
+		D8ADF18525B4144600629EEC /* RFCDetailHour.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RFCDetailHour.swift; path = Source/Types/RFC5545/Detail/RFCDetailHour.swift; sourceTree = "<group>"; };
+		D8ADF18925B4145B00629EEC /* RFCDetailMinute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RFCDetailMinute.swift; path = Source/Types/RFC5545/Detail/RFCDetailMinute.swift; sourceTree = "<group>"; };
+		D8ADF18D25B4147400629EEC /* RFCDetailSecond.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RFCDetailSecond.swift; path = Source/Types/RFC5545/Detail/RFCDetailSecond.swift; sourceTree = "<group>"; };
 		D8B6A6B325A135150050A157 /* ConfigurationSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ConfigurationSpec.swift; path = Tests/ConfigurationSpec.swift; sourceTree = "<group>"; };
 		D8C528EC25AD5EEF007B76C8 /* RRuleSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RRuleSpec.swift; path = Tests/Types/RRuleSpec.swift; sourceTree = "<group>"; };
 		D8C528ED25AD5EEF007B76C8 /* RFC5545Spec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RFC5545Spec.swift; path = Tests/Types/RFC5545Spec.swift; sourceTree = "<group>"; };
-		D8C528FA25AD5FC5007B76C8 /* RecurrableSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RecurrableSpec.swift; path = Tests/Types/RecurrableSpec.swift; sourceTree = "<group>"; };
-		D8C528FE25AD6009007B76C8 /* Criteria.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Criteria.swift; path = Source/Types/Criteria.swift; sourceTree = "<group>"; };
 		D8C5290A25AD812B007B76C8 /* CriteriaSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CriteriaSpec.swift; path = Tests/Types/CriteriaSpec.swift; sourceTree = "<group>"; };
 		D8C5292425AEF4BE007B76C8 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Constants.swift; path = Source/Types/Constants.swift; sourceTree = "<group>"; };
-		D8C5292825AF7CCF007B76C8 /* YearInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YearInfo.swift; sourceTree = "<group>"; };
 		D8DA195F25A428B9001AC180 /* Interop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Interop.swift; path = Source/Protocols/Interop.swift; sourceTree = "<group>"; };
-		D8DA197925A4673F001AC180 /* RFC5545.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RFC5545.swift; path = Source/Types/RFC5545.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,10 +113,38 @@
 			children = (
 				D8C528ED25AD5EEF007B76C8 /* RFC5545Spec.swift */,
 				D8C528EC25AD5EEF007B76C8 /* RRuleSpec.swift */,
-				D8C528FA25AD5FC5007B76C8 /* RecurrableSpec.swift */,
 				D8C5290A25AD812B007B76C8 /* CriteriaSpec.swift */,
 			);
 			name = Types;
+			sourceTree = "<group>";
+		};
+		D8247EBB25B2E3E700671808 /* RFC5545 */ = {
+			isa = PBXGroup;
+			children = (
+				D8247EC225B2E4D600671808 /* Detail */,
+				D8ADF11D25B2FA3900629EEC /* RFCFrequency.swift */,
+				D8ADF12125B2FA7C00629EEC /* RFCMonth.swift */,
+				D8ADF12525B2FAA500629EEC /* RFCWeekDay.swift */,
+				D8ADF12925B2FAD600629EEC /* RFCOrdWeekDay.swift */,
+				D8ADF12D25B2FBA100629EEC /* RFCRRule.swift */,
+			);
+			name = RFC5545;
+			sourceTree = "<group>";
+		};
+		D8247EC225B2E4D600671808 /* Detail */ = {
+			isa = PBXGroup;
+			children = (
+				D8247EE125B2F0C000671808 /* RFCDetailYearday.swift */,
+				D8247ED125B2EF5E00671808 /* RFCDetailWeekno.swift */,
+				D8247EC325B2E4F300671808 /* RFCDetailSetpos.swift */,
+				D8247ED725B2F03C00671808 /* RFCDetailMonth.swift */,
+				D8247EE525B2F14500671808 /* RFCDetailMonthday.swift */,
+				D8247EE925B2F20500671808 /* RFCDetailWeekDay.swift */,
+				D8ADF18525B4144600629EEC /* RFCDetailHour.swift */,
+				D8ADF18925B4145B00629EEC /* RFCDetailMinute.swift */,
+				D8ADF18D25B4147400629EEC /* RFCDetailSecond.swift */,
+			);
+			name = Detail;
 			sourceTree = "<group>";
 		};
 		D8278111259CD4A300A1B6CA /* Frameworks */ = {
@@ -176,13 +224,10 @@
 		D87BF86E25A07B7E006EAAC1 /* Types */ = {
 			isa = PBXGroup;
 			children = (
+				D8247EBB25B2E3E700671808 /* RFC5545 */,
 				D80BBEDB25A7E3BF00762B6F /* Multi.swift */,
-				D8DA197925A4673F001AC180 /* RFC5545.swift */,
 				D80BBED325A7E2DF00762B6F /* RRule.swift */,
-				D8C528FE25AD6009007B76C8 /* Criteria.swift */,
-				D80BBF1925AC088200762B6F /* Recurrable.swift */,
 				D8C5292425AEF4BE007B76C8 /* Constants.swift */,
-				D8C5292825AF7CCF007B76C8 /* YearInfo.swift */,
 			);
 			name = Types;
 			sourceTree = "<group>";
@@ -190,8 +235,8 @@
 		D8ABFD3025A072FC0066BDB2 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
-				D8ABFD3125A072FC0066BDB2 /* WeekDay+RFCWeekdayInterop.swift */,
-				D80BBF3B25AC2D0F00762B6F /* RFCRRule+CriteriaInterop.swift */,
+				D8247E9B25B195B800671808 /* Month+RFCMonthInterop.swift */,
+				D8ABFD3125A072FC0066BDB2 /* WeekDay+RFCWeekDayInterop.swift */,
 			);
 			name = Categories;
 			path = Source/Categories;
@@ -200,6 +245,7 @@
 		D8ABFD4125A073AC0066BDB2 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
+				D8247EF125B2F80A00671808 /* RFC5545.swift */,
 				D8ABFD4E25A074290066BDB2 /* Queryable.swift */,
 				D8ABFD4A25A074100066BDB2 /* Iterable.swift */,
 				D8DA195F25A428B9001AC180 /* Interop.swift */,
@@ -330,16 +376,27 @@
 			files = (
 				D8ABFD4F25A074290066BDB2 /* Queryable.swift in Sources */,
 				D8C5292525AEF4BE007B76C8 /* Constants.swift in Sources */,
-				D8C5292925AF7CCF007B76C8 /* YearInfo.swift in Sources */,
+				D8247EE225B2F0C000671808 /* RFCDetailYearday.swift in Sources */,
+				D8ADF18625B4144600629EEC /* RFCDetailHour.swift in Sources */,
+				D8247EEA25B2F20500671808 /* RFCDetailWeekDay.swift in Sources */,
+				D8247E9C25B195B800671808 /* Month+RFCMonthInterop.swift in Sources */,
+				D8ADF12625B2FAA500629EEC /* RFCWeekDay.swift in Sources */,
 				D80BBEDC25A7E3BF00762B6F /* Multi.swift in Sources */,
-				D8C528FF25AD6009007B76C8 /* Criteria.swift in Sources */,
-				D80BBF3C25AC2D0F00762B6F /* RFCRRule+CriteriaInterop.swift in Sources */,
-				D8DA197A25A4673F001AC180 /* RFC5545.swift in Sources */,
+				D8ADF12225B2FA7C00629EEC /* RFCMonth.swift in Sources */,
+				D8ADF12E25B2FBA100629EEC /* RFCRRule.swift in Sources */,
+				D8247ED825B2F03C00671808 /* RFCDetailMonth.swift in Sources */,
+				D8247ED225B2EF5E00671808 /* RFCDetailWeekno.swift in Sources */,
 				D8ABFD4B25A074100066BDB2 /* Iterable.swift in Sources */,
-				D80BBF1A25AC088200762B6F /* Recurrable.swift in Sources */,
-				D8ABFD3225A072FC0066BDB2 /* WeekDay+RFCWeekdayInterop.swift in Sources */,
+				D8ADF12A25B2FAD600629EEC /* RFCOrdWeekDay.swift in Sources */,
+				D8ADF11E25B2FA3900629EEC /* RFCFrequency.swift in Sources */,
+				D8247EF225B2F80A00671808 /* RFC5545.swift in Sources */,
+				D8ABFD3225A072FC0066BDB2 /* WeekDay+RFCWeekDayInterop.swift in Sources */,
+				D8ADF18E25B4147400629EEC /* RFCDetailSecond.swift in Sources */,
 				D8DA196025A428B9001AC180 /* Interop.swift in Sources */,
+				D8ADF18A25B4145B00629EEC /* RFCDetailMinute.swift in Sources */,
 				D80BBED425A7E2E000762B6F /* RRule.swift in Sources */,
+				D8247EC425B2E4F300671808 /* RFCDetailSetpos.swift in Sources */,
+				D8247EE625B2F14500671808 /* RFCDetailMonthday.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -350,7 +407,6 @@
 				D8C528EE25AD5EEF007B76C8 /* RRuleSpec.swift in Sources */,
 				D8C5290B25AD812B007B76C8 /* CriteriaSpec.swift in Sources */,
 				D8C528EF25AD5EEF007B76C8 /* RFC5545Spec.swift in Sources */,
-				D8C528FB25AD5FC5007B76C8 /* RecurrableSpec.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

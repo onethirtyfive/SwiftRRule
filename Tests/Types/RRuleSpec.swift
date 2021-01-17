@@ -26,15 +26,23 @@ class RRuleSpec: QuickSpec {
 
         }
 
-        describe("Configuration") {
+        describe("Recurrable") {
             var rfcRRule: RFCRRule {
-                RFCRRule(RFCWhence(), RFCRRuleParameters(), RFCRRuleDetails())
+                let
+                    whence = RFCRRuleWhence(),
+                    parameters = RFCRRuleParameters(dtstart: whence.dtstart),
+                    details = RFCRRuleDetails(
+                        freq: parameters.freq,
+                        dtstart: whence.dtstart
+                    )
+
+                return RFCRRule(whence, parameters, details)
             }
 
             describe("initializing with RRule") {
                 it("does not normally throw") {
                     expect {
-                        try BLRRuleSwift.Configuration(rfcRRule)
+                        try Recurrable(rfcRRule)
                     }.notTo(throwError())
                 }
             }
@@ -42,7 +50,7 @@ class RRuleSpec: QuickSpec {
             describe("initializing with RFCRRule") {
                 it("does not normally throw") {
                     expect {
-                        try BLRRuleSwift.Configuration(rfcRRule)
+                        try Recurrable(rfcRRule)
                     }.notTo(throwError())
                 }
             }

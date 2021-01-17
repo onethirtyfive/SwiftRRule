@@ -8,14 +8,18 @@
 import Foundation
 import SwiftDate
 
+protocol RFCMonthInterop {
+    var rfcMonth: RFCMonth { get }
+}
+
 protocol RFCWeekDayInterop {
     var rfcWeekDay: RFCWeekDay { get }
 }
 
-protocol WeekDayInterop {
-    var weekDay: WeekDay { get }
+protocol MonthInterop {
+    var month: Month { get }
 }
 
-protocol CriteriaInterop {
-    var criteria: Criteria { get }
+protocol WeekDayInterop {
+    var weekDay: WeekDay { get }
 }
