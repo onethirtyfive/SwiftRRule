@@ -27,12 +27,18 @@ public enum RRuleFreq: Int {
 extension RRuleFreq: Comparable {
     private static func minimum(_ lhs: Self, _ rhs: Self) -> Self {
         switch (lhs, rhs) {
-        case (.yearly, _), (_, .yearly): return .yearly
-        case (.monthly, _), (_, .monthly): return .monthly
-        case (.weekly, _), (_, .weekly): return .weekly
-        case (.daily, _), (_, .daily): return .daily
-        case (.hourly, _), (_, .hourly): return .hourly
-        case (.minutely, _), (_, .minutely): return .minutely
+        case (.yearly, _), (_, .yearly):
+            return .yearly
+        case (.monthly, _), (_, .monthly):
+            return .monthly
+        case (.weekly, _), (_, .weekly):
+            return .weekly
+        case (.daily, _), (_, .daily):
+            return .daily
+        case (.hourly, _), (_, .hourly):
+            return .hourly
+        case (.minutely, _), (_, .minutely):
+            return .minutely
         case (.secondly, _), (_, .secondly):
             // technically unreachable, but here for exhaustiveness
             return .secondly
