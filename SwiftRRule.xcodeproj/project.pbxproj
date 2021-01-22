@@ -36,7 +36,7 @@
 			containerPortal = D833611B259CA32600E802D6 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = D8336125259CA36300E802D6;
-			remoteInfo = BLRRuleSwift;
+			remoteInfo = SwiftRRule;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -256,7 +256,7 @@
 			packageProductDependencies = (
 				D8278117259CD4DB00A1B6CA /* SwiftDate */,
 			);
-			productName = BLRRuleSwift;
+			productName = SwiftRRule;
 			productReference = D8336126259CA36300E802D6 /* SwiftRRule.framework */;
 			productType = "com.apple.product-type.framework";
 		};
@@ -278,7 +278,7 @@
 				D8609BAD259CAFC300DC5109 /* Nimble */,
 				D8B6A6BC25A137D20050A157 /* Quick */,
 			);
-			productName = BLRRuleSwiftTests;
+			productName = SwiftRRuleTests;
 			productReference = D833612F259CA36300E802D6 /* SwiftRRuleTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
