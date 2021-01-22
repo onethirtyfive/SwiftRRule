@@ -52,9 +52,6 @@ public enum RRuleDetail<T: Hashable>: Equatable {
 
 // MARK: - Common Implementations
 
-extension ConcreteRRuleDetail {
-}
-
 extension Adequacy where Self: ConcreteRRuleDetail {
     public var isAdequate: Bool {
         Self.fnIsAdequate(detail)
