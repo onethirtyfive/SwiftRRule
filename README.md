@@ -1,3 +1,3 @@
-# BLRRuleSwift
+# SwiftRRule
 
-A description of this package.
+WIP port of js rrule library.
