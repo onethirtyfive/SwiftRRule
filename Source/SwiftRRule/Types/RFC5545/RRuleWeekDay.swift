@@ -36,6 +36,18 @@ public enum RRuleWeekDay: Hashable, RawRepresentable {
         }
     }
 
+    public func nth(_ n: Number) -> RRuleWeekDay {
+        switch self {
+        case .monday(_): return .monday(n: n)
+        case .tuesday(_): return .tuesday(n: n)
+        case .wednesday(_): return .wednesday(n: n)
+        case .thursday(_): return .thursday(n: n)
+        case .friday(_): return .friday(n: n)
+        case .saturday(_): return .saturday(n: n)
+        case .sunday(_): return .sunday(n: n)
+        }
+    }
+
     public func hash(into hasher: inout Hasher) {
         switch self {
         case
@@ -83,15 +95,15 @@ extension RRuleWeekDay: Equatable {
 
 // Swift 5.3 has synthesized enum Comparable, but this enables earlier version support.
 extension RRuleWeekDay: Comparable {
-    public static func zeroCase(_ weekDay: RRuleWeekDay) -> Self {
+    public static func nilCase(_ weekDay: RRuleWeekDay) -> Self {
         switch weekDay {
-        case .monday(_): return .monday(n: 0)
-        case .tuesday(_): return .tuesday(n: 0)
-        case .wednesday(_): return .wednesday(n: 0)
-        case .thursday(_): return .thursday(n: 0)
-        case .friday(_): return .friday(n: 0)
-        case .saturday(_): return .saturday(n: 0)
-        case .sunday(_): return .sunday(n: 0)
+        case .monday(_): return .monday()
+        case .tuesday(_): return .tuesday()
+        case .wednesday(_): return .wednesday()
+        case .thursday(_): return .thursday()
+        case .friday(_): return .friday()
+        case .saturday(_): return .saturday()
+        case .sunday(_): return .sunday()
         }
     }
 
@@ -118,10 +130,10 @@ extension RRuleWeekDay: Comparable {
     public static func < (lhs: RRuleWeekDay, rhs: RRuleWeekDay) -> Bool {
         // Comparison ignores 'n'
         let
-            lhs = Self.zeroCase(lhs),
-            rhs = Self.zeroCase(rhs)
+            lhs0 = Self.nilCase(lhs),
+            rhs0 = Self.nilCase(rhs)
 
-        return lhs != rhs && lhs == Self.minimum(lhs, rhs)
+        return lhs0 != rhs0 && lhs0 == Self.minimum(lhs0, rhs0)
     }
 }
 

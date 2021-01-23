@@ -44,6 +44,3 @@ public protocol ConcreteRRuleDetail {
     init(_ detail: RRuleDetail<T>)
     var detail: RRuleDetail<T> { get }
 }
-
-// MARK: -
-

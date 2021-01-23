@@ -1,5 +1,5 @@
 //
-//  WeekDay+RFCWeekdayInterop.swift
+//  WeekDay+RRuleWeekdayInterop.swift
 //  SwiftRRule
 //
 //  Created by Joshua Morris on 1/2/21.

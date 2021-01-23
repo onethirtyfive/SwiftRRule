@@ -50,12 +50,20 @@ class RRuleDetailSpec: QuickSpec {
                     }
 
                     context("invalid member") {
-                        let detail = RRuleDetail<Number>.many([1, -42])
+                        let detail1 = RRuleDetail<Number>.many([1, -42])
+                        let detail2 = RRuleDetail<RRuleWeekDay>.one(.monday(n: 0)) // n can't be zero
 
                         it("throws a specific error") {
                             let error = RRuleDetailValidationError.invalidMember(-42)
                             expect {
-                                try detail.validate(using: unconditionallyInvalid)
+                                try detail1.validate(using: unconditionallyInvalid)
+                            }.to(throwError(error))
+                        }
+
+                        it("throws a specific error") {
+                            let error = RRuleDetailValidationError<RRuleWeekDay>.invalidMember(.monday(n: 0))
+                            expect {
+                                try detail2.validate(using: Byweekday.fnIsMemberValid)
                             }.to(throwError(error))
                         }
                     }

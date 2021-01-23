@@ -116,7 +116,7 @@ internal func manyOrOneIsAdequate<T>() -> ( (RRuleDetail<T>) -> Bool ) {
 
 internal let unconditional = { (_: Any) in true }
 
-public struct Byyearday: ConcreteRRuleDetail, Adequacy, Validatable, Flattenable {
+public struct Byyearday: ConcreteRRuleDetail, Equatable, Adequacy, Validatable, Flattenable {
     public typealias T = Number
     public static let
         fnIsAdequate: AdequacyTest<T> = manyIsAdequate(),
@@ -128,7 +128,7 @@ public struct Byyearday: ConcreteRRuleDetail, Adequacy, Validatable, Flattenable
     }
 }
 
-public struct Byweekno: ConcreteRRuleDetail, Adequacy, Validatable, Flattenable {
+public struct Byweekno: ConcreteRRuleDetail, Equatable, Adequacy, Validatable, Flattenable {
     public typealias T = Number
     public static let
         fnIsAdequate: AdequacyTest<T> = manyOrOneIsAdequate(),
@@ -140,7 +140,7 @@ public struct Byweekno: ConcreteRRuleDetail, Adequacy, Validatable, Flattenable 
     }
 }
 
-public struct Bysetpos: ConcreteRRuleDetail, Validatable, Flattenable {
+public struct Bysetpos: ConcreteRRuleDetail, Equatable, Validatable, Flattenable {
     public typealias T = Number
     public static let fnIsMemberValid: ValidityTest<T> = { (-366...366).contains($0) && $0 != 0 }
     public let detail: RRuleDetail<T>
@@ -150,7 +150,7 @@ public struct Bysetpos: ConcreteRRuleDetail, Validatable, Flattenable {
     }
 }
 
-public struct Bymonth: ConcreteRRuleDetail, Validatable, Flattenable, Anchorable {
+public struct Bymonth: ConcreteRRuleDetail, Equatable, Validatable, Flattenable, Anchorable {
     public typealias T = RRuleMonth
     public static let fnIsMemberValid: ValidityTest<T> = unconditional
     public let detail: RRuleDetail<T>
@@ -160,7 +160,7 @@ public struct Bymonth: ConcreteRRuleDetail, Validatable, Flattenable, Anchorable
     }
 }
 
-public struct Bymonthday: ConcreteRRuleDetail, Adequacy, Validatable, Partitionable, Anchorable {
+public struct Bymonthday: ConcreteRRuleDetail, Equatable, Adequacy, Validatable, Partitionable, Anchorable {
     public typealias T = Number
     public static let
         fnIsAdequate: AdequacyTest<T> = manyOrOneIsAdequate(),
@@ -172,11 +172,21 @@ public struct Bymonthday: ConcreteRRuleDetail, Adequacy, Validatable, Partitiona
     }
 }
 
-public struct Byweekday: ConcreteRRuleDetail, Adequacy, Validatable, Partitionable, Anchorable {
+public struct Byweekday: ConcreteRRuleDetail, Equatable, Adequacy, Validatable, Partitionable, Anchorable {
     public typealias T = RRuleWeekDay
     public static let
         fnIsAdequate: AdequacyTest<T> = manyIsAdequate(),
-        fnIsMemberValid: ValidityTest<T> = unconditional
+        fnIsMemberValid: ValidityTest<T> = {
+            switch $0 {
+            case
+                .monday(let n), .tuesday(let n), .wednesday(let n), .thursday(let n), .friday(let n),
+                .saturday(let n), .sunday(let n):
+                guard n != 0 else {
+                    return false
+                }
+            }
+            return true
+        }
     public let detail: RRuleDetail<T>
 
     public init(_ detail: RRuleDetail<T>) {
@@ -184,7 +194,7 @@ public struct Byweekday: ConcreteRRuleDetail, Adequacy, Validatable, Partitionab
     }
 }
 
-public struct Byhour: ConcreteRRuleDetail, Validatable, Flattenable, Anchorable {
+public struct Byhour: ConcreteRRuleDetail, Equatable, Validatable, Flattenable, Anchorable {
     public typealias T = Number
     public static let fnIsMemberValid: ValidityTest<T> = { (0...23).contains($0) }
     public let detail: RRuleDetail<T>
@@ -194,7 +204,7 @@ public struct Byhour: ConcreteRRuleDetail, Validatable, Flattenable, Anchorable 
     }
 }
 
-public struct Byminute: ConcreteRRuleDetail, Validatable, Flattenable, Anchorable {
+public struct Byminute: ConcreteRRuleDetail, Equatable, Validatable, Flattenable, Anchorable {
     public typealias T = Number
     public static let fnIsMemberValid = { (0...59).contains($0) }
     public let detail: RRuleDetail<T>
@@ -204,7 +214,7 @@ public struct Byminute: ConcreteRRuleDetail, Validatable, Flattenable, Anchorabl
     }
 }
 
-public struct Bysecond: ConcreteRRuleDetail, Validatable, Flattenable, Anchorable {
+public struct Bysecond: ConcreteRRuleDetail, Equatable, Validatable, Flattenable, Anchorable {
     public typealias T = Number
     public static let fnIsMemberValid = { (0...60).contains($0) } // '60' not a typo
     public let detail: RRuleDetail<T>

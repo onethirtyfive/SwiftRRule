@@ -37,7 +37,7 @@ public struct RRuleWhence: Validatable {
 public struct RRuleParameters {
     let dtstart: Date
 
-    var
+    public var
         freq: RRuleFreq = .yearly,
         interval: Int = 1,
         wkst: RRuleWeekDay = .monday(),
@@ -78,6 +78,8 @@ public struct RRuleDetails {
         byminute = Byminute(.none), // ‡¶
         bysecond = Bysecond(.none) // ‡¶
 
+    var isNormal: Bool = false
+
     public var isAdequate: Bool {
         byyearday.isAdequate || byweekno.isAdequate || bymonthday.isAdequate || byweekday.isAdequate
     }
@@ -95,14 +97,14 @@ public struct RRuleDetails {
             switch freq {
             case .yearly:
                 if case .none = bymonth.detail {
-                    let rruleMonth = RRuleMonth(rawValue: dtstart.month)!
+                    let rruleMonth = Month(rawValue: dtstart.month - 1)!.rruleMonth
                     bymonth = bymonth.anchored(to: rruleMonth)
                 }
                 bymonthday = bymonthday.anchored(to: dtstart.day)
             case .monthly:
                 bymonthday = bymonthday.anchored(to: dtstart.day)
             case .weekly:
-                let rruleWeekDay = RRuleWeekDay(rawValue: dtstart.weekday - 1)!
+                let rruleWeekDay = WeekDay(rawValue: dtstart.weekday - 1)!.rruleWeekDay
                 byweekday = byweekday.anchored(to: rruleWeekDay)
             default:
                 break
@@ -132,7 +134,8 @@ public struct RRuleDetails {
             byweekday: byweekday,
             byhour: byhour,
             byminute: byminute,
-            bysecond: bysecond
+            bysecond: bysecond,
+            isNormal: true
         )
     }
 
@@ -152,12 +155,13 @@ public struct RRuleDetails {
 // MARK: -
 
 public struct RRule {
-    let
+    public var
         whence: RRuleWhence,
         parameters: RRuleParameters,
         details: RRuleDetails
 
     public var isAdequate: Bool { details.isAdequate }
+    public var isNormal: Bool { details.isNormal }
     public var normal: RRule { RRule(whence, parameters, details.normal) }
 
     init(_ whence: RRuleWhence, _ parameters: RRuleParameters, _ details: RRuleDetails) {
@@ -175,11 +179,36 @@ public struct RRule {
 
 // MARK: -
 
-public struct NormalValidRRule {
+public enum NormalRRuleError: Error {
+    case sourceAlreadyNormal(_: RRule)
+}
+
+public struct NormalRRule {
     public let raw: RRule
 
     init(_ rrule: RRule) throws {
-        try rrule.validate()
+        guard rrule.isNormal == false else {
+            throw NormalRRuleError.sourceAlreadyNormal(rrule)
+        }
         self.raw = rrule.normal
+    }
+
+    public func validate() throws -> Void {
+        try self.raw.validate()
+    }
+}
+
+// MARK: -
+
+public struct NormalValidRRule {
+    public let
+        normalRRule: NormalRRule,
+        raw: RRule
+
+    init(_ normalRRule: NormalRRule) throws {
+        self.normalRRule = normalRRule
+        try normalRRule.validate()
+
+        self.raw = normalRRule.raw
     }
 }

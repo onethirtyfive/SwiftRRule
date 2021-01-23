@@ -10,12 +10,14 @@ import Foundation
 public struct Recurrable {
     public let
         provided: RRule, // as provided by caller
+        normalRRule: NormalRRule, // normalized provided
         normalValidRRule: NormalValidRRule // details are normalized (anchored, etc.)
 
     init(_ rrule: RRule) throws {
         // A pipeline with minimal type guarantees.
         self.provided = rrule
-        self.normalValidRRule = try NormalValidRRule(rrule)
+        self.normalRRule = try NormalRRule(rrule)
+        self.normalValidRRule = try NormalValidRRule(normalRRule)
     }
 
     public var byyearday: Multi<Number> { details.byyearday.flattened() }
