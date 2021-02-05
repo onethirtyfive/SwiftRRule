@@ -8,35 +8,26 @@
 import Foundation
 import SwiftDate
 
-typealias WeekDayMask = [Number]
-typealias MonthMask = [Number]
-typealias MonthRange = [Number]
-typealias DayMask = [Number]
-typealias DayRange = [Number]
-typealias WeeknoMask = [Number]
+public typealias WeekDayMask = [Number]
+public typealias MonthMask = [Number]
+public typealias MonthRange = [Number]
+public typealias DayMask = [Number]
+public typealias DayRange = [Number]
+public typealias WeeknoMask = [Number]
 
 public enum Constants {
     // MARK: - Annual masks (weekdays for weeks)
 
-    internal static let calendarWeekDays: [Number] =
-        [
-            RRuleWeekDay.sunday().rawValue,
-            RRuleWeekDay.monday().rawValue,
-            RRuleWeekDay.tuesday().rawValue,
-            RRuleWeekDay.wednesday().rawValue,
-            RRuleWeekDay.thursday().rawValue,
-            RRuleWeekDay.friday().rawValue,
-            RRuleWeekDay.saturday().rawValue
-        ]
+    public static let cyclicWeekDays: [Number] = Array(0..<7)
 
     // MARK: Public
 
-    static let weekDayMask: WeekDayMask =
-        Array(Array(repeating: calendarWeekDays, count: 55).joined())
+    public static let weekDayMask: WeekDayMask =
+        Array(Array(repeating: cyclicWeekDays, count: 55).joined())
 
     // MARK: - Annual masks, ranges (months for days)
 
-    internal static let
+    public static let
         ja = MonthMask(repeating: RRuleMonth.january.rawValue, count: 31),
         fe29 = MonthMask(repeating: RRuleMonth.february.rawValue, count: 29),
         fe28 = MonthMask(repeating: RRuleMonth.february.rawValue, count: 28),
@@ -54,7 +45,7 @@ public enum Constants {
 
     // MARK: Public
 
-    static let
+    public static let
         month365Mask: MonthMask =
             Array([ja, fe28, mr, ap, my, jn, jl, au, se, oc, no, de, ex].joined()),
         month365Range: DayRange =
@@ -66,14 +57,14 @@ public enum Constants {
 
     // MARK: - Annual masks, ranges (days for months)
 
-    internal static let
+    public static let
         m28: [Int] = Array((1...28)),
         m29: [Int] = Array((1...29)),
         m30: [Int] = Array((1...30)),
         m31: [Int] = Array((1...31)),
         mEx: [Int] = Array(Array(arrayLiteral: m31[0...6]).joined())
 
-    internal static let
+    public static let
         n28: [Int] = Array((-28...(-1))),
         n29: [Int] = Array((-29...(-1))),
         n30: [Int] = Array((-30...(-1))),
@@ -82,13 +73,13 @@ public enum Constants {
 
     // MARK: Public
 
-    static let
+    public static let
         posDay366Mask: DayMask =
             Array([m31, m29, m31, m30, m31, m30, m31, m31, m30, m31, m30, m31, mEx].joined()),
         negDay366Mask: DayMask =
             Array([n31, n29, n31, n30, n31, n30, n31, n31, n30, n31, n30, n31, nEx].joined())
 
-    static let
+    public static let
         posDay365Mask: DayMask =
             Array([m31, m28, m31, m30, m31, m30, m31, m31, m30, m31, m30, m31, mEx].joined()),
         negDay365Mask: DayMask =
@@ -96,6 +87,8 @@ public enum Constants {
 
     // MARK: - Public (other)
 
-    static let pyWeekDays: [RRuleWeekDay] =
-        [.monday(), .tuesday(), .wednesday(), .thursday(), .friday(), .saturday(), .sunday()]
+    public enum YearLength: Int {
+        case normal = 365
+        case leap = 366
+    }
 }

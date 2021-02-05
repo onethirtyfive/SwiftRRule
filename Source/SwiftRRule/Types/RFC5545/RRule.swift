@@ -9,11 +9,11 @@ import Foundation
 import SwiftDate
 
 public struct RRuleWhence: Validatable {
-    var
+    public var
         dtstart: Date,
         tzid: Zones? = nil
 
-    init(_ dtstart: Date? = nil, tzid: Zones? = nil) {
+    public init(_ dtstart: Date? = nil, tzid: Zones? = nil) {
         let withTruncatedMilliseconds = { (_ dtstart: Date) -> Date in
             let withoutMilliseconds = TimeInterval(Int(dtstart.timeIntervalSince1970))
             return Date(seconds: withoutMilliseconds)
@@ -44,7 +44,7 @@ public struct RRuleParameters {
         count: Int? = nil,
         until: Date? = nil
 
-    init(dtstart: Date) {
+    public init(dtstart: Date) {
         self.dtstart = dtstart
     }
 
@@ -68,15 +68,15 @@ public struct RRuleDetails {
         // ‡ if absent and rrule freq appropriate, anchor regardless of rrule isAdequate
         // ¶ flattens to a sets of numbers
         // § partitions into two sets: numbers, and ordinal numbers (aka nth-number)
-        byyearday = Byyearday(.none), // *¶
-        byweekno = Byweekno(.none), // *¶
-        bysetpos = Bysetpos(.none), // ¶
-        bymonth = Bymonth(.none), // ‖†¶
-        bymonthday = Bymonthday(.none), // *‖§
-        byweekday = Byweekday(.none), // *‖§
-        byhour = Byhour(.none), // ‡¶
-        byminute = Byminute(.none), // ‡¶
-        bysecond = Bysecond(.none) // ‡¶
+        byyearday: Byyearday, // *¶
+        byweekno: Byweekno, // *¶
+        bysetpos: Bysetpos, // ¶
+        bymonth: Bymonth, // ‖†¶
+        bymonthday: Bymonthday, // *‖§
+        byweekday: Byweekday, // *‖§
+        byhour: Byhour, // ‡¶
+        byminute: Byminute, // ‡¶
+        bysecond: Bysecond // ‡¶
 
     var isNormal: Bool = false
 
@@ -139,6 +139,34 @@ public struct RRuleDetails {
         )
     }
 
+    public init(
+        freq: RRuleFreq,
+        dtstart: Date,
+        byyearday: Byyearday = Byyearday(.none),
+        byweekno: Byweekno = Byweekno(.none),
+        bysetpos: Bysetpos = Bysetpos(.none),
+        bymonth: Bymonth = Bymonth(.none),
+        bymonthday: Bymonthday = Bymonthday(.none),
+        byweekday: Byweekday = Byweekday(.none),
+        byhour: Byhour = Byhour(.none),
+        byminute: Byminute = Byminute(.none),
+        bysecond: Bysecond = Bysecond(.none),
+        isNormal: Bool = false
+    ) {
+        self.freq = freq
+        self.dtstart = dtstart
+        self.byyearday = byyearday
+        self.byweekno = byweekno
+        self.bysetpos = bysetpos
+        self.bymonth = bymonth
+        self.bymonthday = bymonthday
+        self.byweekday = byweekday
+        self.byhour = byhour
+        self.byminute = byminute
+        self.bysecond = bysecond
+        self.isNormal = isNormal
+    }
+
     public func validate() throws -> Void {
         try byyearday.validate()
         try byweekno.validate()
@@ -164,7 +192,7 @@ public struct RRule {
     public var isNormal: Bool { details.isNormal }
     public var normal: RRule { RRule(whence, parameters, details.normal) }
 
-    init(_ whence: RRuleWhence, _ parameters: RRuleParameters, _ details: RRuleDetails) {
+    public init(_ whence: RRuleWhence, _ parameters: RRuleParameters, _ details: RRuleDetails) {
         self.whence = whence
         self.parameters = parameters
         self.details = details
@@ -186,7 +214,7 @@ public enum NormalRRuleError: Error {
 public struct NormalRRule {
     public let raw: RRule
 
-    init(_ rrule: RRule) throws {
+    public init(_ rrule: RRule) throws {
         guard rrule.isNormal == false else {
             throw NormalRRuleError.sourceAlreadyNormal(rrule)
         }
@@ -205,7 +233,7 @@ public struct NormalValidRRule {
         normalRRule: NormalRRule,
         raw: RRule
 
-    init(_ normalRRule: NormalRRule) throws {
+    public init(_ normalRRule: NormalRRule) throws {
         self.normalRRule = normalRRule
         try normalRRule.validate()
 

@@ -18,9 +18,6 @@
 		D8ACE8E325BC045B0075065B /* Number+PartitionableSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8ACE8E225BC045B0075065B /* Number+PartitionableSpec.swift */; };
 		D8ACE8E725BC04FA0075065B /* WeekDay+RRuleWeekDayInteropSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8ACE8E625BC04FA0075065B /* WeekDay+RRuleWeekDayInteropSpec.swift */; };
 		D8ACE8F325BC06420075065B /* RRuleSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8ACE8F225BC06420075065B /* RRuleSpec.swift */; };
-		D8ACE8F725BC07540075065B /* RecurrableSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8ACE8F625BC07540075065B /* RecurrableSpec.swift */; };
-		D8ACE8FD25BC0E0B0075065B /* MultiSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8ACE8FC25BC0E0B0075065B /* MultiSpec.swift */; };
-		D8B6A6BD25A137D20050A157 /* Quick in Frameworks */ = {isa = PBXBuildFile; productRef = D8B6A6BC25A137D20050A157 /* Quick */; };
 		D8CECDA825BAA5B0008DEC70 /* RRuleFreq.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8CECDA325BAA5B0008DEC70 /* RRuleFreq.swift */; };
 		D8CECDA925BAA5B0008DEC70 /* RRuleWeekDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8CECDA425BAA5B0008DEC70 /* RRuleWeekDay.swift */; };
 		D8CECDAA25BAA5B0008DEC70 /* RRuleDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8CECDA525BAA5B0008DEC70 /* RRuleDetail.swift */; };
@@ -38,6 +35,11 @@
 		D8CECDCA25BAA617008DEC70 /* Number+Flattenable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8CECDC625BAA617008DEC70 /* Number+Flattenable.swift */; };
 		D8CECDCB25BAA617008DEC70 /* Number+Partitionable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8CECDC725BAA617008DEC70 /* Number+Partitionable.swift */; };
 		D8CECDEA25BAA7A3008DEC70 /* RRuleDetailSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8CECDD125BAA653008DEC70 /* RRuleDetailSpec.swift */; };
+		D8FC89C625C403CE00FB9BF1 /* Quick in Frameworks */ = {isa = PBXBuildFile; productRef = D8FC89C525C403CE00FB9BF1 /* Quick */; };
+		D8FC89D525CD3EE100FB9BF1 /* MultiSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8FC89D325CD3EE100FB9BF1 /* MultiSpec.swift */; };
+		D8FC89D625CD3EE100FB9BF1 /* RecurrableSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8FC89D425CD3EE100FB9BF1 /* RecurrableSpec.swift */; };
+		D8FC89DC25CD3EFE00FB9BF1 /* YearInfoSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8FC89DB25CD3EFE00FB9BF1 /* YearInfoSpec.swift */; };
+		D8FC89E225CD3F2F00FB9BF1 /* YearInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8FC89E125CD3F2F00FB9BF1 /* YearInfo.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,7 +54,6 @@
 
 /* Begin PBXFileReference section */
 		D82668D025BAD5B0009B0875 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		D8278123259D116100A1B6CA /* Sandbox.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; name = Sandbox.playground; path = "../../../Library/Autosave Information/Sandbox.playground"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		D8336126259CA36300E802D6 /* SwiftRRule.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftRRule.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D833612F259CA36300E802D6 /* SwiftRRuleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftRRuleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8609B5E259CA42600DC5109 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Tests/Info.plist; sourceTree = "<group>"; };
@@ -66,8 +67,6 @@
 		D8ACE8E225BC045B0075065B /* Number+PartitionableSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Number+PartitionableSpec.swift"; path = "Tests/SwiftRRule/Categories/Number+PartitionableSpec.swift"; sourceTree = "<group>"; };
 		D8ACE8E625BC04FA0075065B /* WeekDay+RRuleWeekDayInteropSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "WeekDay+RRuleWeekDayInteropSpec.swift"; path = "Tests/SwiftRRule/Categories/WeekDay+RRuleWeekDayInteropSpec.swift"; sourceTree = "<group>"; };
 		D8ACE8F225BC06420075065B /* RRuleSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RRuleSpec.swift; sourceTree = "<group>"; };
-		D8ACE8F625BC07540075065B /* RecurrableSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RecurrableSpec.swift; path = Tests/SwiftRRule/RecurrableSpec.swift; sourceTree = "<group>"; };
-		D8ACE8FC25BC0E0B0075065B /* MultiSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MultiSpec.swift; path = Tests/SwiftRRule/MultiSpec.swift; sourceTree = "<group>"; };
 		D8CECD9E25BAA591008DEC70 /* SwiftRRule.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = SwiftRRule.podspec; sourceTree = "<group>"; };
 		D8CECDA325BAA5B0008DEC70 /* RRuleFreq.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RRuleFreq.swift; path = Source/SwiftRRule/Types/RFC5545/RRuleFreq.swift; sourceTree = "<group>"; };
 		D8CECDA425BAA5B0008DEC70 /* RRuleWeekDay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RRuleWeekDay.swift; path = Source/SwiftRRule/Types/RFC5545/RRuleWeekDay.swift; sourceTree = "<group>"; };
@@ -86,6 +85,10 @@
 		D8CECDC625BAA617008DEC70 /* Number+Flattenable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Number+Flattenable.swift"; path = "Source/SwiftRRule/Categories/Number+Flattenable.swift"; sourceTree = "<group>"; };
 		D8CECDC725BAA617008DEC70 /* Number+Partitionable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Number+Partitionable.swift"; path = "Source/SwiftRRule/Categories/Number+Partitionable.swift"; sourceTree = "<group>"; };
 		D8CECDD125BAA653008DEC70 /* RRuleDetailSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RRuleDetailSpec.swift; sourceTree = "<group>"; };
+		D8FC89D325CD3EE100FB9BF1 /* MultiSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MultiSpec.swift; path = Tests/SwiftRRule/Types/MultiSpec.swift; sourceTree = "<group>"; };
+		D8FC89D425CD3EE100FB9BF1 /* RecurrableSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RecurrableSpec.swift; path = Tests/SwiftRRule/Types/RecurrableSpec.swift; sourceTree = "<group>"; };
+		D8FC89DB25CD3EFE00FB9BF1 /* YearInfoSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = YearInfoSpec.swift; path = Tests/SwiftRRule/Types/YearInfoSpec.swift; sourceTree = "<group>"; };
+		D8FC89E125CD3F2F00FB9BF1 /* YearInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = YearInfo.swift; path = Source/SwiftRRule/Types/YearInfo.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,7 +104,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D8B6A6BD25A137D20050A157 /* Quick in Frameworks */,
+				D8FC89C625C403CE00FB9BF1 /* Quick in Frameworks */,
 				D8609BAE259CAFC300DC5109 /* Nimble in Frameworks */,
 				D8336130259CA36300E802D6 /* SwiftRRule.framework in Frameworks */,
 			);
@@ -114,8 +117,9 @@
 			isa = PBXGroup;
 			children = (
 				D8CECDD025BAA653008DEC70 /* RFC5545 */,
-				D8ACE8F625BC07540075065B /* RecurrableSpec.swift */,
-				D8ACE8FC25BC0E0B0075065B /* MultiSpec.swift */,
+				D8FC89D325CD3EE100FB9BF1 /* MultiSpec.swift */,
+				D8FC89D425CD3EE100FB9BF1 /* RecurrableSpec.swift */,
+				D8FC89DB25CD3EFE00FB9BF1 /* YearInfoSpec.swift */,
 			);
 			name = Types;
 			sourceTree = "<group>";
@@ -142,7 +146,6 @@
 		D833611A259CA32600E802D6 = {
 			isa = PBXGroup;
 			children = (
-				D8278123259D116100A1B6CA /* Sandbox.playground */,
 				D82668D025BAD5B0009B0875 /* README.md */,
 				D8609B8A259CA70E00DC5109 /* Deployment */,
 				D8609B8F259CA7D800DC5109 /* Source */,
@@ -211,6 +214,7 @@
 			isa = PBXGroup;
 			children = (
 				D8247EBB25B2E3E700671808 /* RFC5545 */,
+				D8FC89E125CD3F2F00FB9BF1 /* YearInfo.swift */,
 				D8CECDAF25BAA5C6008DEC70 /* Recurrable.swift */,
 				D8CECDB125BAA5C6008DEC70 /* Multi.swift */,
 				D8CECDB025BAA5C6008DEC70 /* Constants.swift */,
@@ -314,7 +318,7 @@
 			name = SwiftRRuleTests;
 			packageProductDependencies = (
 				D8609BAD259CAFC300DC5109 /* Nimble */,
-				D8B6A6BC25A137D20050A157 /* Quick */,
+				D8FC89C525C403CE00FB9BF1 /* Quick */,
 			);
 			productName = SwiftRRuleTests;
 			productReference = D833612F259CA36300E802D6 /* SwiftRRuleTests.xctest */;
@@ -394,6 +398,7 @@
 				D8CECDBE25BAA5E6008DEC70 /* RFC5545.swift in Sources */,
 				D8CECDC925BAA617008DEC70 /* Month+RRuleMonthInterop.swift in Sources */,
 				D8CECDBF25BAA5E6008DEC70 /* Interop.swift in Sources */,
+				D8FC89E225CD3F2F00FB9BF1 /* YearInfo.swift in Sources */,
 				D8CECDCA25BAA617008DEC70 /* Number+Flattenable.swift in Sources */,
 				D8CECDB225BAA5C6008DEC70 /* Recurrable.swift in Sources */,
 				D8CECDB325BAA5C6008DEC70 /* Constants.swift in Sources */,
@@ -408,15 +413,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D8FC89D525CD3EE100FB9BF1 /* MultiSpec.swift in Sources */,
 				D8ACE8DD25BC042B0075065B /* Number+FlattenableSpec.swift in Sources */,
-				D8ACE8FD25BC0E0B0075065B /* MultiSpec.swift in Sources */,
 				D8ACE8C625BBF29A0075065B /* RRuleWeekDaySpec.swift in Sources */,
 				D8ACE8F325BC06420075065B /* RRuleSpec.swift in Sources */,
+				D8FC89D625CD3EE100FB9BF1 /* RecurrableSpec.swift in Sources */,
 				D8CECDEA25BAA7A3008DEC70 /* RRuleDetailSpec.swift in Sources */,
 				D8ACE8DC25BC042B0075065B /* Month+RRuleMonthInteropSpec.swift in Sources */,
 				D8ACE8E725BC04FA0075065B /* WeekDay+RRuleWeekDayInteropSpec.swift in Sources */,
 				D8ACE8BE25BBED140075065B /* RRuleFreqSpec.swift in Sources */,
-				D8ACE8F725BC07540075065B /* RecurrableSpec.swift in Sources */,
+				D8FC89DC25CD3EFE00FB9BF1 /* YearInfoSpec.swift in Sources */,
 				D8ACE8E325BC045B0075065B /* Number+PartitionableSpec.swift in Sources */,
 				D8ACE8C225BBEF640075065B /* RRuleMonthSpec.swift in Sources */,
 			);
@@ -455,6 +461,7 @@
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_CODE_COVERAGE = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
@@ -536,6 +543,7 @@
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_CODE_COVERAGE = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
@@ -815,7 +823,7 @@
 			package = D8609BAC259CAFC300DC5109 /* XCRemoteSwiftPackageReference "Nimble" */;
 			productName = Nimble;
 		};
-		D8B6A6BC25A137D20050A157 /* Quick */ = {
+		D8FC89C525C403CE00FB9BF1 /* Quick */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = D8B6A6BB25A137D20050A157 /* XCRemoteSwiftPackageReference "Quick" */;
 			productName = Quick;
