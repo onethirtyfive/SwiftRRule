@@ -39,13 +39,8 @@ class YearinfoSpec: QuickSpec {
                     recurrable = try Recurrable(rrule)
 
                 let
-                    yeardetails = YearDetails(whence.dtstart.year),
-                    yearweeknomask =
-                        YearWeeknoMask(
-                            yeardetails,
-                            normalByweekno: recurrable.byweekno,
-                            normalWkst: recurrable.wkst
-                        )
+                    timespan = YearTimespan(epochRounded.year),
+                    yearweeknomask = YearWeeknoMask(timespan, recurrable: recurrable)
 
                 let
                     mask = yearweeknomask.computed,

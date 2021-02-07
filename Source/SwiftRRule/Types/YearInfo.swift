@@ -21,19 +21,6 @@ extension Array where Element == YearWeeknoMask.Patch {
     }
 }
 
-public struct YearWeekDayMask {
-    let
-        basis: WeekDayMask,
-        starting: Number
-
-    public var computed: WeekDayMask { Array(basis[starting...]) }
-
-    public init(_ details: YearDetails, weekDayMask: WeekDayMask? = nil) {
-        self.basis = weekDayMask ?? Constants.weekDayMask
-        self.starting = basis.firstIndex(of: details.newYearsWeekDay.rawValue)!
-    }
-}
-
 public struct YearWeeknoMask {
     public struct Patch {
         let
@@ -167,26 +154,25 @@ public struct YearWeeknoMask {
         return mask
     }
 
-    public init(
-        _ details: YearDetails,
-        normalByweekno byweekno: Multi<Number>,
-        normalWkst wkst: Number,
-        yearWeekDayMask: YearWeekDayMask? = nil
-    ) {
+    public init(_ timespan: YearTimespan, recurrable: Recurrable) {
         let
-            basisYearWeekDayMask = yearWeekDayMask ?? YearWeekDayMask(details),
-            newYearsWeekDay = details.newYearsWeekDay.rawValue
+            thisYear = timespan.thisYear,
+            thisYearNewYears = thisYear.newYears
 
-        self.normalByweekno = byweekno
+        let
+            wkst = recurrable.wkst,
+            byweekno = recurrable.byweekno
+
         self.normalWkst = wkst
-        self.weekDayMask = basisYearWeekDayMask.computed
+        self.normalByweekno = byweekno
+        self.weekDayMask = thisYear.weekDayMask
 
-        self.naturalWeekOffset = (wkst + 7 - newYearsWeekDay) %% 7
-        self.yearLength = details.length.rawValue
+        self.naturalWeekOffset = (wkst + 7 - thisYearNewYears.rruleWeekDay.rawValue) %% 7
+        self.yearLength = thisYear.length.rawValue
 
         if naturalWeekOffset >= 4 {
             let
-                length = (newYearsWeekDay - normalWkst) %% 7 + yearLength,
+                length = (thisYearNewYears.rruleWeekDay.rawValue - wkst) %% 7 + yearLength,
                 literalWeeks = Int(floor(Double(length) / 7.0)),
                 excessWeekDays = length %% 7
 
@@ -204,8 +190,9 @@ public struct YearWeeknoMask {
             self.computedWeeks = Number(floor(Double(literalWeeks) + Double(excessWeekDays) / 4.0))
         }
 
-        self.priorNewYearsWeekDay = details.priorNewYearsWeekDay.rawValue
-        self.priorYearLength = details.priorLength.rawValue
+        // FIXME: Ugly.
+        self.priorYearLength = timespan.lastYear.length.rawValue
+        self.priorNewYearsWeekDay = timespan.lastYear.newYears.rruleWeekDay.rawValue
     }
 }
 
@@ -217,34 +204,47 @@ public struct YearMasks {
         weekDay: WeekDayMask,
         weekno: WeeknoMask? = nil
 
-    public init(_ details: YearDetails, normalByweekno byweekno: Multi<Number>, normalWkst wkst: Number,
-        yearWeekDayMask: YearWeekDayMask? = nil) {
-        let basisYearWeekDayMask = yearWeekDayMask ?? YearWeekDayMask(details)
+    public init(_ timespan: YearTimespan, recurrable: Recurrable) {
+        let thisYear = timespan.thisYear
 
-        switch details.length {
-        case .normal:
-            self.month = Constants.month365Mask
-            self.posDay = Constants.posDay365Mask
-            self.negDay = Constants.negDay365Mask
-        case .leap:
+        if thisYear.isLeapYear {
             self.month = Constants.month366Mask
             self.posDay = Constants.posDay366Mask
             self.negDay = Constants.negDay366Mask
+        } else {
+            self.month = Constants.month365Mask
+            self.posDay = Constants.posDay365Mask
+            self.negDay = Constants.negDay365Mask
         }
 
-        self.weekDay = basisYearWeekDayMask.computed
+        self.weekDay = thisYear.weekDayMask
 
-        if byweekno.isEmpty {
+        if recurrable.byweekno.isEmpty {
             self.weekno = nil
         } else {
-            self.weekno =
-                YearWeeknoMask(
-                    details,
-                    normalByweekno: byweekno,
-                    normalWkst: wkst,
-                    yearWeekDayMask: basisYearWeekDayMask
-                ).computed
+            self.weekno = YearWeeknoMask(timespan, recurrable: recurrable).computed
         }
+    }
+}
+
+extension Calendar {
+    public static var gregorianUTC: Calendar {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = TimeZone(abbreviation: "UTC")!
+        return calendar
+    }
+}
+
+extension Date {
+    public static func gregorianUTCNewYears(of year: Number) -> Date {
+        Calendar.gregorianUTC.date(from: DateComponents(year: year))!
+    }
+
+    public var rruleWeekDay: RRuleWeekDay { WeekDay(rawValue: weekday)!.rruleWeekDay }
+
+    public func ordinal(since reference: Number = 1) -> Number {
+        let eraNewYears = Self.gregorianUTCNewYears(of: reference)
+        return calendar.dateComponents([.day], from: eraNewYears, to: self).day! - 1
     }
 }
 
@@ -253,67 +253,57 @@ public enum YearLength: Int {
     case leap = 366
 }
 
-extension Date {
-    public var isLeap: Bool {
-        (year % 4 == 0 && year % 100 != 0) || year % 400 == 0
-    }
-}
-
 public struct YearDetails {
-    public let
-        length: YearLength,
-        newYears: Date,
-        newYearsWeekDay: RRuleWeekDay,
-        newYearsOrdinal: Ord,
-        monthRange: MonthRange,
+    public let newYears: Date
 
-        priorLength: YearLength,
-        priorNewYears: Date,
-        priorNewYearsWeekDay: RRuleWeekDay,
+    public var year: Number { newYears.year }
+    public var isLeapYear: Bool { (year % 4 == 0 && year % 100 != 0) || year % 400 == 0 }
+    public var length: YearLength { isLeapYear ? .leap : .normal }
 
-        nextLength: YearLength
-
-    public init(_ year: Number, calendar providedCalendar: Calendar? = nil) {
-        var calendar: Calendar
-
-        if providedCalendar == nil {
-            calendar = Calendar(identifier: .gregorian)
-            calendar.timeZone = TimeZone(abbreviation: "UTC")!
+    public var monthRange: MonthRange {
+        if case .normal = length {
+            return Constants.month365Range
         } else {
-            calendar = providedCalendar!
+            return Constants.month366Range
         }
+    }
 
+    public var weekDayMask: WeekDayMask {
         let
-            eraNewYears = calendar.date(from: DateComponents(calendar: calendar, year: 1))!,
-            newYears = calendar.date(from: DateComponents(calendar: calendar, year: year))!,
-            priorNewYears = calendar.date(from: DateComponents(calendar: calendar, year: year - 1))!,
-            nextNewYears = calendar.date(from: DateComponents(calendar: calendar, year: year + 1))!
+            basis = Constants.weekDayMask,
+            newYearsWeekDayOccurrence = basis.firstIndex(of: newYears.rruleWeekDay.rawValue)!
+        return Array(basis[newYearsWeekDayOccurrence...])
+    }
 
-        self.length = newYears.isLeap ? .leap : .normal
-        self.newYears = newYears
-        self.newYearsWeekDay = WeekDay(rawValue: newYears.weekday)!.rruleWeekDay
-        self.newYearsOrdinal = calendar.dateComponents([.day], from: eraNewYears, to: newYears).day! - 1
-        self.monthRange = newYears.isLeap ? Constants.month365Range : Constants.month366Range
-
-        self.priorLength = priorNewYears.isLeap ? .leap : .normal
-        self.priorNewYears = priorNewYears
-        self.priorNewYearsWeekDay = WeekDay(rawValue: priorNewYears.weekday)!.rruleWeekDay
-
-        self.nextLength = nextNewYears.isLeap ? .leap : .normal
+    public init(_ year: Number) {
+        self.newYears = Date.gregorianUTCNewYears(of: year)
     }
 }
 
-public struct YearInfo {
+public struct YearTimespan {
     public let
-        details: YearDetails,
+        thisYear: YearDetails,
+        lastYear: YearDetails,
+        nextYear: YearDetails
+
+    public var year: Number { thisYear.year }
+
+    public init(_ year: Number) {
+        self.thisYear = YearDetails(year)
+        self.lastYear = YearDetails(year - 1)
+        self.nextYear = YearDetails(year + 1)
+    }
+}
+
+public struct Year {
+    public let
+        timespan: YearTimespan,
         masks: YearMasks
 
-    public init(_ year: Number, recurrable: Recurrable, calendar: Calendar? = nil) {
-        var calendar: Calendar = calendar ?? Calendar(identifier: .gregorian)
-        calendar.timeZone = TimeZone(identifier: "UTC")!
+    public init(_ year: Number, recurrable: Recurrable) {
+        let timespan = YearTimespan(year)
 
-        let details = YearDetails(year, calendar: calendar)
-        self.details = details
-        self.masks = YearMasks(details, normalByweekno: recurrable.byweekno, normalWkst: recurrable.wkst)
+        self.timespan = timespan
+        self.masks = YearMasks(timespan, recurrable: recurrable)
     }
 }
