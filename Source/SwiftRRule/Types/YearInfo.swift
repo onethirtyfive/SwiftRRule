@@ -15,184 +15,162 @@ public func %%<T: BinaryInteger>(lhs: T, rhs: T) -> T {
     return rem >= 0 ? rem : rem + rhs
 }
 
-extension Array where Element == YearWeeknoMask.Patch {
+extension Array where Element == Patch {
     public func applyAll(to target: inout WeeknoMask) {
         forEach { patch in patch.apply(to: &target)}
     }
 }
 
-public struct YearWeeknoMask {
-    public struct Patch {
+public struct Patch {
+    let
+        at: Number,
+        change: [Number]
+
+    public init(at: Number, _ change: [Number]) {
+        self.at = at
+        self.change = change
+    }
+
+    public func apply(to target: inout WeeknoMask) -> Void {
+        target.replaceSubrange((at..<(at + change.count)), with: change)
+    }
+}
+
+public struct PatchBuilder {
+    public static func possibleLeadingPatch(_ thisYear: YearDetails, recurrable: Recurrable) -> Patch? {
         let
-            at: Number,
-            change: [Number]
+            recurrableDaysToWkst = thisYear.recurrableDaysToWkst,
+            weekDayMask = thisYear.weekDayMask,
+            recurrableDaysInYear = thisYear.recurrableDaysInYear,
+            wkst = recurrable.wkst,
+            byweekno = recurrable.byweekno,
+            lastYear = thisYear.forYearPreceding
 
-        public static func builder(terminus: Number, using weekDayMask: WeekDayMask) ->
-            (_: Number) -> Self {
-            
-            { starting in
-                var contents: [Number] = []
+        if recurrableDaysToWkst != 0 {
+            let builder = PatchBuilder(xref: weekDayMask, until: thisYear.daysFromNewYearsToWkst)
 
-                for offset in (0..<7) {
-                    contents.append(1)
-                    if weekDayMask[starting + offset + 1] == terminus {
-                        break
-                    }
-                }
+            // Move to YearDetail?
+            let lastYearLiteralWeekOffset = lastYear.daysFromNewYearsToWkst >= 4
+                ? lastYear.daysInYear + (lastYear.newYearsWeekDay - wkst) %% 7
+                : recurrableDaysInYear - recurrableDaysToWkst
+            let lastYearFinalWeekno = Int(floor(52.0 + Double(lastYearLiteralWeekOffset %% 7) / 4.0))
 
-                return Self(at: starting, contents)
-            }
-        }
-
-        public init(at: Number, _ change: [Number]) {
-            self.at = at
-            self.change = change
-        }
-
-        public func apply(to target: inout WeeknoMask) -> Void {
-            target.replaceSubrange((at..<(at + change.count)), with: change)
-        }
-    }
-
-    public let
-        normalByweekno: Multi<Number>,
-        normalWkst: Number,
-        weekDayMask: WeekDayMask,
-
-        computedWeeks: Number,
-        naturalWeekOffset: Number,
-        computedWeekOffset: Number,
-        length: Number,
-        yearLength: Number,
-
-        priorNewYearsWeekDay: Number,
-        priorYearLength: Number
-
-    internal var leadingWeekPatch: Patch? {
-        guard computedWeekOffset != 0 else {
-            return nil
-        }
-
-        var
-            priorComputedFinalWeek: Number,
-            priorComputedWeekOffset: Number = (normalWkst + 7 - priorNewYearsWeekDay) %% 7
-
-        if normalByweekno.contains(-1) {
-            priorComputedFinalWeek = -1
-        } else {
-            let priorLiteralWeekOffset = priorComputedWeekOffset >= 4
-                ? priorYearLength + (priorNewYearsWeekDay - normalWkst) %% 7
-                : length - computedWeekOffset
-            priorComputedFinalWeek = Int(floor(52.0 + Double(priorLiteralWeekOffset %% 7) / 4.0))
-        }
-
-        if normalByweekno.contains(priorComputedFinalWeek) {
-            let patchBuilder = Patch.builder(terminus: priorComputedWeekOffset, using: weekDayMask)
-            return patchBuilder(0)
-        } else {
-            return nil
-        }
-    }
-
-    internal var firstWeekPatch: Patch? {
-        let patchBuilder = Patch.builder(terminus: normalWkst, using: weekDayMask)
-
-        if normalByweekno.contains(1) {
-            // Check week #1 of next year as well
-            let basis = computedWeekOffset + computedWeeks * 7
-
-            let at = computedWeekOffset == naturalWeekOffset
-                ? basis
-                : basis - (7 - naturalWeekOffset)
-
-            return at < yearLength
-                ? patchBuilder(at)
+            return byweekno.contains(-1) || byweekno.contains(lastYearFinalWeekno)
+                ? builder.patch(at: 0)
                 : nil
         } else {
             return nil
         }
     }
 
-    internal var centralWeekPatches: [Patch?] {
-        let patchBuilder = Patch.builder(terminus: normalWkst, using: weekDayMask)
+    public static func possibleFirstPatch(_ thisYear: YearDetails, recurrable: Recurrable) -> Patch? {
+        let
+            wkst = recurrable.wkst,
+            weekDayMask = thisYear.weekDayMask,
+            byweekno = recurrable.byweekno,
+            daysInYear = thisYear.daysInYear,
+            daysFromNewYearsToWkst = thisYear.daysFromNewYearsToWkst,
+            recurrableDaysToWkst = thisYear.recurrableDaysToWkst,
+            recurrableWeeks = thisYear.recurrableWeeks
 
-        return
-            normalByweekno.map { (weekno) -> Patch? in
-                let normalizedWeekno = weekno < 0
-                    ? weekno + computedWeeks + 1 // really subtracting from end of year
-                    : weekno
-                var at: Number
+        guard byweekno.contains(1) == true else {
+            return nil
+        }
 
-                if (1...computedWeeks).contains(normalizedWeekno) {
-                    if normalizedWeekno == 1 {
-                        at = computedWeekOffset
-                    } else {
-                        let basis = computedWeekOffset + (normalizedWeekno - 1) * 7
-                        at = computedWeekOffset == naturalWeekOffset
-                            ? basis
-                            : basis - (7 - naturalWeekOffset)
-                    }
+        let
+            basis = recurrableDaysToWkst + recurrableWeeks * 7,
+            at = recurrableDaysToWkst == daysFromNewYearsToWkst
+                ? basis
+                : basis - (7 - daysFromNewYearsToWkst)
 
-                    return patchBuilder(at)
-                } else {
-                    return nil
-                }
-            }
+        return at < daysInYear
+            ? PatchBuilder(xref: weekDayMask, until: wkst).patch(at: at)
+            : nil
     }
+
+    public static func possibleCentralPatch(_ thisYear: YearDetails, recurrable: Recurrable,
+        weekno: Number) -> Patch? {
+
+        let
+            recurrableWeeks = thisYear.recurrableWeeks,
+            wkst = recurrable.wkst,
+            recurrableDaysToWkst = thisYear.recurrableDaysToWkst,
+            daysFromNewYearsToWkst = thisYear.daysFromNewYearsToWkst,
+            weekDayMask = thisYear.weekDayMask
+
+        let normalizedWeekno = weekno < 0
+            ? recurrableWeeks + 1 - abs(weekno) // really subtracting from end of year
+            : weekno
+
+        if (1...recurrableWeeks).contains(normalizedWeekno) {
+            let builder = PatchBuilder(xref: weekDayMask, until: wkst)
+            var starting: Number
+
+            if normalizedWeekno == 1 {
+                starting = recurrableDaysToWkst
+            } else {
+                let basis = recurrableDaysToWkst + (normalizedWeekno - 1) * 7
+                starting = recurrableDaysToWkst == daysFromNewYearsToWkst
+                    ? basis
+                    : basis - (7 - daysFromNewYearsToWkst)
+            }
+
+            return builder.patch(at: starting)
+        } else {
+            return nil
+        }
+    }
+
+    let
+        weekDayMask: WeekDayMask,
+        stop: Number
+
+    public init(xref weekDayMask: WeekDayMask, until stop: Number) {
+        self.weekDayMask = weekDayMask
+        self.stop = stop
+    }
+
+    public func patch(at starting: Number) -> Patch {
+        var contents: [Number] = []
+
+        for offset in (0..<7) {
+            contents.append(1)
+            if weekDayMask[starting + offset + 1] == stop {
+                break
+            }
+        }
+
+        return Patch(at: starting, contents)
+    }
+}
+
+public struct YearWeeknoMask {
+    let
+        thisYear: YearDetails,
+        recurrable: Recurrable
 
     public var computed: WeeknoMask {
         var
-            mask: WeeknoMask = Array(repeating: 0, count: yearLength + 7),
+            mask: WeeknoMask = Array(repeating: 0, count: thisYear.daysInYear + 7),
             patches: [Patch?] = []
 
-        patches.append(firstWeekPatch)
+        let centralWeekPatches =
+            recurrable.byweekno.map { (weekno) -> Patch? in
+                return PatchBuilder.possibleCentralPatch(thisYear, recurrable: recurrable, weekno: weekno)
+            }
+
+        patches.append(PatchBuilder.possibleFirstPatch(thisYear, recurrable: recurrable))
+        patches.append(PatchBuilder.possibleLeadingPatch(thisYear, recurrable: recurrable))
         patches.append(contentsOf: centralWeekPatches)
-        patches.append(leadingWeekPatch)
 
         patches.compactMap { $0 }.applyAll(to: &mask)
 
         return mask
     }
 
-    public init(_ timespan: YearTimespan, recurrable: Recurrable) {
-        let
-            thisYear = timespan.thisYear,
-            thisYearNewYears = thisYear.newYears
-
-        let
-            wkst = recurrable.wkst,
-            byweekno = recurrable.byweekno
-
-        self.normalWkst = wkst
-        self.normalByweekno = byweekno
-        self.weekDayMask = thisYear.weekDayMask
-
-        self.naturalWeekOffset = (wkst + 7 - thisYearNewYears.rruleWeekDay.rawValue) %% 7
-        self.yearLength = thisYear.length.rawValue
-
-        if naturalWeekOffset >= 4 {
-            let
-                length = (thisYearNewYears.rruleWeekDay.rawValue - wkst) %% 7 + yearLength,
-                literalWeeks = Int(floor(Double(length) / 7.0)),
-                excessWeekDays = length %% 7
-
-            self.length = length
-            self.computedWeekOffset = 0
-            self.computedWeeks = Number(floor(Double(literalWeeks) + Double(excessWeekDays) / 4.0))
-        } else {
-            let
-                length = yearLength - naturalWeekOffset,
-                literalWeeks = Int(floor(Double(length) / 7.0)),
-                excessWeekDays = length %% 7
-
-            self.length = length
-            self.computedWeekOffset = naturalWeekOffset
-            self.computedWeeks = Number(floor(Double(literalWeeks) + Double(excessWeekDays) / 4.0))
-        }
-
-        // FIXME: Ugly.
-        self.priorYearLength = timespan.lastYear.length.rawValue
-        self.priorNewYearsWeekDay = timespan.lastYear.newYears.rruleWeekDay.rawValue
+    public init(_ thisYear: YearDetails, recurrable: Recurrable) {
+        self.thisYear = thisYear
+        self.recurrable = recurrable
     }
 }
 
@@ -204,9 +182,7 @@ public struct YearMasks {
         weekDay: WeekDayMask,
         weekno: WeeknoMask? = nil
 
-    public init(_ timespan: YearTimespan, recurrable: Recurrable) {
-        let thisYear = timespan.thisYear
-
+    public init(_ thisYear: YearDetails, recurrable: Recurrable) {
         if thisYear.isLeapYear {
             self.month = Constants.month366Mask
             self.posDay = Constants.posDay366Mask
@@ -222,7 +198,7 @@ public struct YearMasks {
         if recurrable.byweekno.isEmpty {
             self.weekno = nil
         } else {
-            self.weekno = YearWeeknoMask(timespan, recurrable: recurrable).computed
+            self.weekno = YearWeeknoMask(thisYear, recurrable: recurrable).computed
         }
     }
 }
@@ -254,11 +230,22 @@ public enum YearLength: Int {
 }
 
 public struct YearDetails {
-    public let newYears: Date
+    public let
+        newYears: Date,
+        wkst: Number
+
+    public var forYearPreceding: YearDetails { YearDetails(year - 1, wkst: wkst) }
+    public var forYearFollowing: YearDetails { YearDetails(year + 1, wkst: wkst) }
+
+    public var newYearsWeekDay: Number { newYears.rruleWeekDay.rawValue }
+    public var daysFromNewYearsToWkst: Number { (wkst + 7 - newYearsWeekDay) %% 7 } // FKA: naturalWeekOffset
 
     public var year: Number { newYears.year }
     public var isLeapYear: Bool { (year % 4 == 0 && year % 100 != 0) || year % 400 == 0 }
     public var length: YearLength { isLeapYear ? .leap : .normal }
+    public var daysInYear: Number { length.rawValue }
+    public var trailingWeekDays: Number { recurrableDaysInYear %% 7 }
+    public var weeks: Number { Int(floor(Double(recurrableDaysInYear) / 7.0)) }
 
     public var monthRange: MonthRange {
         if case .normal = length {
@@ -271,39 +258,39 @@ public struct YearDetails {
     public var weekDayMask: WeekDayMask {
         let
             basis = Constants.weekDayMask,
-            newYearsWeekDayOccurrence = basis.firstIndex(of: newYears.rruleWeekDay.rawValue)!
+            newYearsWeekDayOccurrence = basis.firstIndex(of: newYearsWeekDay)!
         return Array(basis[newYearsWeekDayOccurrence...])
     }
 
-    public init(_ year: Number) {
-        self.newYears = Date.gregorianUTCNewYears(of: year)
+    public var recurrableDaysInYear: Number {
+        daysFromNewYearsToWkst >= 4
+            ? daysInYear + (newYearsWeekDay - wkst) %% 7
+            : daysInYear - daysFromNewYearsToWkst
     }
-}
 
-public struct YearTimespan {
-    public let
-        thisYear: YearDetails,
-        lastYear: YearDetails,
-        nextYear: YearDetails
+    public var recurrableDaysToWkst: Number {
+        daysFromNewYearsToWkst >= 4
+            ? 0 // treat days preceding first natural week as their own week; aka, start on new years.
+            : daysFromNewYearsToWkst // skip the first week
+    }
 
-    public var year: Number { thisYear.year }
+    public var recurrableWeeks: Number { Number(floor(Double(weeks) + Double(trailingWeekDays) / 4.0)) }
 
-    public init(_ year: Number) {
-        self.thisYear = YearDetails(year)
-        self.lastYear = YearDetails(year - 1)
-        self.nextYear = YearDetails(year + 1)
+    public init(_ year: Number, wkst: Number) {
+        self.newYears = Date.gregorianUTCNewYears(of: year)
+        self.wkst = wkst
     }
 }
 
 public struct Year {
     public let
-        timespan: YearTimespan,
+        details: YearDetails,
         masks: YearMasks
 
     public init(_ year: Number, recurrable: Recurrable) {
-        let timespan = YearTimespan(year)
+        let details = YearDetails(year, wkst: recurrable.wkst)
 
-        self.timespan = timespan
-        self.masks = YearMasks(timespan, recurrable: recurrable)
+        self.details = details
+        self.masks = YearMasks(details, recurrable: recurrable)
     }
 }
